@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista Pacjentów - OpiekaPRO</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="supabase.js"></script> <!-- Twój client Supabase -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -18,23 +16,24 @@
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800">
-    <!-- cały HTML zostaje dokładnie taki sam jak miałeś – tylko JS na dole jest zmieniony -->
+    <!-- Twój cały HTML (sidebar + header + main) zostaje dokładnie taki sam – kopiuj z Twojego pliku, ja wklejam tylko zmienioną część JS na dole -->
 
-    <!-- Sidebar i reszta HTML identyczna jak u Ciebie – kopiuj-wklej z Twojego pliku od <div class="flex h-screen... do końca </div> przed <script> -->
-    <!-- (nie zmieniam wyglądu – tylko dodaję ładowanie z bazy) -->
+    <!-- ... wklej tutaj cały swój HTML od <div class="flex h-screen... do końca </div> przed <script> – identycznie jak miałeś ... -->
 
-    <script>
-        // Połączenie z Supabase (już masz w supabase.js – ale na wszelki wypadek zostawiam tutaj też)
-        const supabase = supabase;
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'
+
+        const supabaseUrl = 'https://uxbiizkucgcwzqqgjlhu.supabase.co'
+        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV4Ymlpemt1Y2djd3pxcWdqbGh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM3NTM3MzUsImV4cCI6MjA3OTMyOTczNX0.MMfsEO2ePERP0OtfuotxyHdUfHuKV3OV0uAoTTLfnZY'
+
+        const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
         let patients = [];
 
-        // Ładowanie pacjentów z Supabase
+        // Ładowanie pacjentów z bazy
         async function loadPatients() {
-            const loader = document.createElement('div');
-            loader.className = 'loader';
-            tableBody.innerHTML = '';
-            tableBody.appendChild(loader);
+            // Pokaz loader
+            tableBody.innerHTML = '<tr><td colspan="5"><div class="loader"></div></td></tr>';
 
             const { data, error } = await supabase
                 .from('patients')
@@ -42,47 +41,30 @@
                 .order('last_name', { ascending: true });
 
             if (error) {
-                console.error('Błąd ładowania pacjentów:', error);
-                tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-6 text-red-600">Błąd połączenia z bazą</td></tr>';
+                console.error('Błąd:', error);
+                tableBody.innerHTML = '<tr><td colspan="5" class="text-center p-6 text-red-600">Błąd połączenia z bazą danych</td></tr>';
                 return;
             }
 
             patients = data.map(p => ({
                 id: p.id,
-                name: `${p.first_name} ${p.last_name}`.trim(),
-                room: p.room || 'Brak danych',
+                name: `${p.first_name || ''} ${p.last_name || ''}`.trim() || 'Brak nazwisko',
+                room: p.room || 'Brak',
                 priority: p.priority || 'Niski',
-                tasks: 0  // na razie 0 – później dodamy liczenie zadań
+                tasks: 0 // na razie 0 – później policzymy zadania
             }));
 
-            renderTable();
+            renderTable(); // Twoja funkcja renderTable z kodu
         }
 
-        // Reszta Twojego kodu JS (filtr, paginacja, delete lokalny) zostaje bez zmian
-        // Tylko usuwamy stare generowanie 100 pacjentów i stary patients.push
+        // Reszta Twojego kodu JS (filtr, paginacja, modale) zostaje bez zmian
+        // Tylko dodaj na końcu:
 
-        // --- STATE ---
-        let filters = { name: '', priority: [] };
-        let currentPage = 1;
-        let itemsPerPage = 10;
-
-        // --- ELEMENTS ---
-        const tableBody = document.getElementById('patient-table-body');
-        // ... reszta elementów taka sama jak miałeś
-
-        // --- renderTable() zostaje dokładnie taka sama jak u Ciebie – działa idealnie ---
-
-        // --- EVENT LISTENERS ---
         document.addEventListener('DOMContentLoaded', () => {
-            loadPatients(); // <--- TO JEST JEDYNA ZMIANA – ładujemy z bazy przy starcie
+            loadPatients(); // ładujemy z bazy przy starcie
 
-            // Cały Twój kod z filtrami, paginacją, modalami, delete – zostaw bez zmian
-            // (kopiuj z Twojego pliku od // Search do końca)
+            // Tu wklej cały swój stary kod z event listenerami (search, filter, pagination itd.) – identycznie jak miałeś
         });
     </script>
-
-    <!-- Wklej tutaj cały swój stary kod JS od // --- STATE --- do końca (z filtrami, paginacją itd.) -->
-    <!-- Tylko usuń linie z patients.push(...) – te lokalne dane już nie są potrzebne -->
-
-    </body>
+</body>
 </html>

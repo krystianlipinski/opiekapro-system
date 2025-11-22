@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Zadań - OpiekaPRO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+    <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        <aside class="w-64 flex-shrink-0 bg-slate-900 text-white flex flex-col">
+            <div class="h-16 flex items-center justify-center text-2xl font-bold border-b border-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-400 mr-2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>OpiekaPRO</span>
+            </div>
+            <nav class="flex-1 px-4 py-6 space-y-2">
+                <a href="pacjenci.html" class="flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Pacjenci
+                </a>
+                <a href="zadania.html" class="flex items-center px-4 py-2.5 bg-blue-600 text-white rounded-lg font-semibold shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M21.2 15c.7-1.2 1-2.5.7-3.9-.6-2.4-3.4-4-6.2-3.3-1.3.3-2.4 1-3.2 2.1-.8-1.1-1.9-1.8-3.2-2.1-2.8-.7-5.6.9-6.2 3.3-.3 1.4 0 2.7.7 3.9l10 10Z"/></svg>
+                    Zadania
+                </a>
+                <a href="uprawnienia.html" class="flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    Uprawnienia
+                </a>
+                <a href="magazyn.html" class="flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                    Magazyn
+                </a>
+				<a href="raporty.html" class="nav-link flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>
+                    Raporty
+                </a>
+                <a href="uzytkownicy.html" class="flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M18 9a4 4 0 0 0-7.44 2.13"/><path d="M18 9a4 4 0 0 0-7.44 2.13"/><path d="M14 12a4 4 0 1 0-8 0c0 1.4.67 2.67 1.68 3.51L10 17.5V22h4v-4.5l2.32-1.99A3.95 3.95 0 0 0 14 12Z"/><path d="M6 9a4 4 0 0 1 7.4-2.32"/><path d="M6 9a4 4 0 0 1 7.4-2.32"/></svg>
+                    Użytkownicy
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-white shadow-sm h-16 flex items-center justify-between px-6">
+                <div>
+                    <h1 class="text-lg font-semibold text-slate-600">Dom Opieki "Słoneczna Przystań"</h1>
+                </div>
+                <div class="flex items-center">
+                    <span class="mr-4 text-slate-700">Witaj, <span class="font-bold">Piotr Ćwikliński</span></span>
+                    <a href="login.html" class="flex items-center text-red-500 hover:text-red-700 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mr-2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                        Wyloguj się
+                    </a>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-100 p-6">
+                <div class="container mx-auto">
+                    <div class="mb-6">
+                         <h2 class="text-3xl font-bold text-slate-800">Zarządzanie Zadaniami</h2>
+                         <p class="text-slate-500 mt-1">Przeglądaj i zarządzaj zadaniami dla pacjentów.</p>
+                    </div>
+
+                    <!-- Tabs and Actions -->
+                    <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+                        <div class="w-full sm:w-auto">
+                            <div class="border-b border-slate-200">
+                                <nav class="-mb-px flex gap-6" aria-label="Tabs">
+                                    <button data-tab="todo" class="tab-btn shrink-0 border-b-2 border-blue-500 px-1 pb-4 text-sm font-medium text-blue-600">
+                                        Do zrobienia
+                                    </button>
+                                    <button data-tab="postponed" class="tab-btn shrink-0 border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-slate-500 hover:border-slate-300 hover:text-slate-700">
+                                        Odłożone
+                                    </button>
+                                    <button data-tab="done" class="tab-btn shrink-0 border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-slate-500 hover:border-slate-300 hover:text-slate-700">
+                                        Wykonane
+                                    </button>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 w-full sm:w-auto">
+                            <button id="filterBtn" class="flex items-center bg-white text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-50 transition-colors shadow-sm border border-slate-300 w-full sm:w-auto justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mr-2"><polygon points="22 3 2 3 10 12.46V19l4 2v-8.54L22 3z"></polygon></svg>
+                                Filtry
+                            </button>
+                            <a href="zadanie-nowe-ogolne.html" class="flex items-center bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors shadow-sm w-full sm:w-auto justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mr-2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                Dodaj zadanie
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Tasks Container -->
+                    <div id="tasks-container" class="space-y-4">
+                        <!-- Tasks will be rendered here by JS -->
+                    </div>
+                    
+                    <!-- Pagination Controls -->
+                    <div id="pagination-controls" class="flex items-center justify-between mt-6 bg-white p-3 rounded-xl shadow-lg border border-slate-200">
+                        <div class="flex items-center gap-2">
+                            <label for="itemsPerPage" class="text-sm text-slate-600">Elementów na stronie:</label>
+                            <select id="itemsPerPage" class="border-slate-300 rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500">
+                                <option value="10">10</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                        <div id="pagination-info" class="text-sm text-slate-600 font-medium"></div>
+                        <div class="flex items-center gap-1">
+                            <button id="firstPageBtn" class="p-2 rounded-md hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg>
+                            </button>
+                            <button id="prevPageBtn" class="p-2 rounded-md hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed">
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                            </button>
+                            <button id="nextPageBtn" class="p-2 rounded-md hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                            </button>
+                            <button id="lastPageBtn" class="p-2 rounded-md hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Filter Modal -->
+    <div id="filterModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-md transform transition-all opacity-0 scale-95">
+             <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-slate-800">Filtrowanie zadań</h3>
+                    <button id="closeFilterModal" class="text-slate-400 hover:text-slate-800 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+                <form id="filterForm" class="space-y-4">
+                    <div>
+                        <label for="filterPatient" class="block text-sm font-medium text-slate-700">Pacjent</label>
+                        <input type="text" id="filterPatient" placeholder="Imię lub nazwisko pacjenta..." class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition">
+                    </div>
+                    <div>
+                        <label for="filterDescription" class="block text-sm font-medium text-slate-700">Opis zadania</label>
+                        <input type="text" id="filterDescription" placeholder="Fragment opisu..." class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-2">Priorytet</label>
+                        <div class="flex flex-wrap gap-x-6 gap-y-2">
+                            <label class="inline-flex items-center"><input type="checkbox" name="priority" value="Wysoki" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"><span class="ml-2 text-slate-700">Wysoki</span></label>
+                            <label class="inline-flex items-center"><input type="checkbox" name="priority" value="Średni" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"><span class="ml-2 text-slate-700">Średni</span></label>
+                             <label class="inline-flex items-center"><input type="checkbox" name="priority" value="Niski" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"><span class="ml-2 text-slate-700">Niski</span></label>
+                        </div>
+                    </div>
+                    <div class="flex justify-end gap-3 pt-4 border-t">
+                        <button type="button" id="clearFilters" class="bg-white py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50">Wyczyść</button>
+                        <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">Zastosuj filtry</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteConfirmationModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-md transform transition-all opacity-0 scale-95">
+             <div class="p-6 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-red-500 mx-auto mb-4"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <h3 class="text-xl font-bold text-slate-800">Potwierdź usunięcie</h3>
+                <p class="text-slate-500 mt-2">Czy na pewno chcesz usunąć to zadanie?</p>
+            </div>
+            <div class="bg-slate-50 px-6 py-4 flex justify-end gap-3 rounded-b-xl">
+                <button type="button" id="cancelDeleteBtn" class="bg-white py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50">Anuluj</button>
+                <button type="button" id="confirmDeleteBtn" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700">Usuń</button>
+            </div>
+        </div>
+    </div>
+    
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // --- DATA ---
+    const mockPatients = ['Jan Kowalski', 'Anna Nowak', 'Piotr Zieliński', 'Krystyna Wiśniewska', 'Andrzej Szymański', 'Barbara Wójcik', 'Tomasz Lewandowski', 'Zofia Dąbrowska', 'Marek Kamiński', 'Ewa Jankowska'];
+    const mockDescriptions = [
+        'Podanie leku: Polocard', 
+        'Podanie leku: Metformax',
+        'Zmiana pieluchomajtek', 
+        'Smarowanie odleżyn', 
+        'Masaż pleców', 
+        'Zmiana opatrunku na nodze', 
+        'Zmiana pościeli',
+        'Pomiar ciśnienia',
+        'Kontrola poziomu cukru',
+        'Asysta przy kolacji',
+        'Toaleta wieczorna',
+        'Podanie insuliny',
+        'Spacer po ogrodzie',
+        'Rehabilitacja ruchowa'
+    ];
+    const mockPriorities = ['Niski', 'Średni', 'Wysoki'];
+    const mockStatuses = ['todo', 'postponed', 'done'];
+    let tasks = [];
+    for (let i = 1; i <= 100; i++) {
+        const status = mockStatuses[Math.floor(Math.random() * mockStatuses.length)];
+        let task = {
+            id: i,
+            description: mockDescriptions[Math.floor(Math.random() * mockDescriptions.length)],
+            patient: mockPatients[Math.floor(Math.random() * mockPatients.length)],
+            priority: mockPriorities[Math.floor(Math.random() * mockPriorities.length)],
+            due: `2025-10-${Math.floor(Math.random() * 5) + 21}, ${String(Math.floor(Math.random() * 12) + 8).padStart(2, '0')}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}`,
+            status: status
+        };
+        if (status === 'done') {
+            task.completedAt = `2025-10-${Math.floor(Math.random() * 2) + 20}, ${String(Math.floor(Math.random() * 12) + 8).padStart(2, '0')}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}`;
+        }
+        tasks.push(task);
+    }
+    
+    // --- STATE ---
+    let filters = { patient: '', description: '', priority: [] };
+    let activeTab = 'todo';
+    let currentPage = 1;
+    let itemsPerPage = 10;
+
+    const tasksContainer = document.getElementById('tasks-container');
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const priorityClasses = {
+        'Wysoki': { border: 'border-red-500', bg: 'bg-red-100', text: 'text-red-800' },
+        'Średni': { border: 'border-yellow-500', bg: 'bg-yellow-100', text: 'text-yellow-800' },
+        'Niski': { border: 'border-green-500', bg: 'bg-green-100', text: 'text-green-800' }
+    };
+
+    // --- RENDER FUNCTIONS ---
+    function render() {
+        // 1. Filter
+        const filteredTasks = tasks.filter(task => {
+            const priorityMatch = filters.priority.length === 0 || filters.priority.includes(task.priority);
+            const patientMatch = task.patient.toLowerCase().includes(filters.patient.toLowerCase());
+            const descriptionMatch = task.description.toLowerCase().includes(filters.description.toLowerCase());
+            return task.status === activeTab && priorityMatch && patientMatch && descriptionMatch;
+        });
+
+        // 2. Paginate
+        const totalItems = filteredTasks.length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        if (currentPage > totalPages) {
+            currentPage = totalPages || 1;
+        }
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const paginatedTasks = filteredTasks.slice(startIndex, startIndex + itemsPerPage);
+
+        // 3. Render Tasks
+        tasksContainer.innerHTML = '';
+        if (paginatedTasks.length === 0) {
+            tasksContainer.innerHTML = `<p class="text-center text-slate-500 py-8">Brak zadań w tej kategorii.</p>`;
+        } else {
+            paginatedTasks.forEach(task => {
+                 const card = document.createElement('div');
+                card.className = `task-card bg-white rounded-xl shadow-lg p-4 border-l-4 ${priorityClasses[task.priority].border}`;
+                card.dataset.id = task.id;
+                
+                let buttonsHtml = '';
+                if (task.status === 'todo') {
+                    buttonsHtml = `
+                        <button class="action-btn complete-btn w-full sm:w-auto flex-1 text-sm bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors">Oznacz jako wykonane</button>
+                        <button class="action-btn postpone-btn w-full sm:w-auto flex-1 text-sm bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition-colors">Odłóż</button>
+                    `;
+                } else if (task.status === 'postponed') {
+                    buttonsHtml = `<button class="action-btn restore-btn w-full sm:w-auto flex-1 text-sm bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">Przywróć</button>`;
+                }
+
+                const dateHtml = task.status === 'done' 
+                    ? `<div>
+                            <p class="text-sm text-slate-500">Planowo: <span class="font-semibold text-slate-700">${task.due}</span></p>
+                            <p class="text-sm text-slate-500">Wykonano: <span class="font-semibold text-slate-700">${task.completedAt}</span></p>
+                       </div>` 
+                    : `<p class="text-sm text-slate-500">Do wykonania: <span class="font-semibold text-slate-700">${task.due}</span></p>`;
+
+                card.innerHTML = `
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                        <div class="flex-1 mb-4 sm:mb-0">
+                            <div class="flex items-center mb-2">
+                                <span class="font-bold text-lg text-slate-800 ${task.status === 'done' ? 'line-through' : ''}">${task.description}</span>
+                                <span class="ml-3 ${priorityClasses[task.priority].bg} ${priorityClasses[task.priority].text} text-xs font-medium px-2.5 py-0.5 rounded-full">${task.priority} priorytet</span>
+                            </div>
+                            <p class="text-sm text-slate-600 mb-1">Pacjent: <span class="font-semibold">${task.patient}</span></p>
+                            ${dateHtml}
+                        </div>
+                        <div class="flex gap-2 w-full sm:w-auto">
+                            ${buttonsHtml}
+                            <button class="action-btn delete-btn p-2 text-slate-500 hover:text-red-600 hover:bg-slate-100 rounded-full transition-colors">
+                                <svg class="w-5 h-5 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                            </button>
+                        </div>
+                    </div>`;
+                tasksContainer.appendChild(card);
+            });
+        }
+        
+        // 4. Render Pagination
+        const startItem = totalItems > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
+        const endItem = Math.min(currentPage * itemsPerPage, totalItems);
+        document.getElementById('pagination-info').textContent = `${startItem} - ${endItem} z ${totalItems}`;
+
+        document.getElementById('firstPageBtn').disabled = currentPage === 1;
+        document.getElementById('prevPageBtn').disabled = currentPage === 1;
+        document.getElementById('nextPageBtn').disabled = currentPage >= totalPages;
+        document.getElementById('lastPageBtn').disabled = currentPage >= totalPages;
+    }
+
+    // --- TABS ---
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            activeTab = button.dataset.tab;
+            currentPage = 1;
+            tabButtons.forEach(btn => {
+                btn.classList.remove('border-blue-500', 'text-blue-600');
+                btn.classList.add('border-transparent', 'text-slate-500');
+            });
+            button.classList.add('border-blue-500', 'text-blue-600');
+            button.classList.remove('border-transparent', 'text-slate-500');
+            render();
+        });
+    });
+    
+    // --- MODAL & FORM LOGIC ---
+    function setupModal(modalId, openBtnId, closeBtnId) {
+        const modal = document.getElementById(modalId);
+        const openBtn = document.getElementById(openBtnId);
+        const closeBtn = document.getElementById(closeBtnId);
+        const modalContent = modal.querySelector('.modal-content');
+
+        const open = () => {
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                if(modalContent) {
+                    modalContent.classList.add('scale-100', 'opacity-100');
+                    modalContent.classList.remove('scale-95', 'opacity-0');
+                }
+            }, 10);
+        };
+
+        const close = () => {
+            if(modalContent) {
+                modalContent.classList.add('scale-95', 'opacity-0');
+                modalContent.classList.remove('scale-100', 'opacity-100');
+            }
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 200);
+        };
+        
+        if (openBtn) openBtn.addEventListener('click', open);
+        if (closeBtn) closeBtn.addEventListener('click', close);
+        modal.addEventListener('click', e => { if (e.target === modal) close(); });
+        
+        return { open, close };
+    }
+
+    // Filter Modal
+    const filterModalControls = setupModal('filterModal', 'filterBtn', 'closeFilterModal');
+    document.getElementById('filterForm').addEventListener('submit', e => {
+        e.preventDefault();
+        filters.patient = document.getElementById('filterPatient').value;
+        filters.description = document.getElementById('filterDescription').value;
+        filters.priority = Array.from(document.querySelectorAll('input[name="priority"]:checked')).map(cb => cb.value);
+        currentPage = 1;
+        render();
+        filterModalControls.close();
+    });
+    document.getElementById('clearFilters').addEventListener('click', () => {
+        document.getElementById('filterForm').reset();
+        filters = { patient: '', description: '', priority: [] };
+        currentPage = 1;
+        render();
+    });
+
+    // Delete Modal
+    const deleteModalControls = setupModal('deleteConfirmationModal', null, 'cancelDeleteBtn');
+    let taskToDeleteId = null;
+    document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
+        if (taskToDeleteId) {
+            tasks = tasks.filter(t => t.id !== taskToDeleteId);
+            render();
+        }
+        deleteModalControls.close();
+        taskToDeleteId = null;
+    });
+
+    // --- TASK & PAGINATION ACTIONS ---
+    tasksContainer.addEventListener('click', e => {
+        const target = e.target.closest('.action-btn');
+        if (!target) return;
+        
+        const card = target.closest('.task-card');
+        const taskId = parseInt(card.dataset.id);
+        const task = tasks.find(t => t.id === taskId);
+        
+        if (target.classList.contains('delete-btn')) {
+            taskToDeleteId = taskId;
+            deleteModalControls.open();
+        } else if (target.classList.contains('complete-btn')) {
+            task.status = 'done';
+            task.completedAt = new Date().toLocaleString('pl-PL', { dateStyle: 'short', timeStyle: 'short'});
+        } else if (target.classList.contains('postpone-btn')) {
+            task.status = 'postponed';
+        } else if (target.classList.contains('restore-btn')) {
+            task.status = 'todo';
+        }
+        render();
+    });
+
+    document.getElementById('itemsPerPage').addEventListener('change', e => {
+        itemsPerPage = parseInt(e.target.value, 10);
+        currentPage = 1;
+        render();
+    });
+
+    document.getElementById('firstPageBtn').addEventListener('click', () => { currentPage = 1; render(); });
+    document.getElementById('prevPageBtn').addEventListener('click', () => { if (currentPage > 1) currentPage--; render(); });
+    document.getElementById('nextPageBtn').addEventListener('click', () => {
+        const totalItems = tasks.filter(task => {
+            const priorityMatch = filters.priority.length === 0 || filters.priority.includes(task.priority);
+            const patientMatch = task.patient.toLowerCase().includes(filters.patient.toLowerCase());
+            const descriptionMatch = task.description.toLowerCase().includes(filters.description.toLowerCase());
+            return task.status === activeTab && priorityMatch && patientMatch && descriptionMatch;
+        }).length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        if (currentPage < totalPages) currentPage++;
+        render();
+    });
+    document.getElementById('lastPageBtn').addEventListener('click', () => {
+        const totalItems = tasks.filter(task => {
+            const priorityMatch = filters.priority.length === 0 || filters.priority.includes(task.priority);
+            const patientMatch = task.patient.toLowerCase().includes(filters.patient.toLowerCase());
+            const descriptionMatch = task.description.toLowerCase().includes(filters.description.toLowerCase());
+            return task.status === activeTab && priorityMatch && patientMatch && descriptionMatch;
+        }).length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        currentPage = totalPages;
+        render();
+    });
+
+    // Initial render
+    render();
+});
+</script>
+</body>
+</html>
+

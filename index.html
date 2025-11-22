@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podgląd Pacjenta - Dom Opieki</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Hide edit fields by default */
+        .edit-field { display: none; }
+        .modal-content {
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+        /* Basic styling for change list */
+        #changesList ul { list-style-type: disc; margin-left: 1.5rem; }
+        #changesList li { margin-bottom: 0.5rem; }
+        #changesList strong { font-weight: 600; }
+        #photoPreviewWrapper { /* Use wrapper for positioning */
+            background-color: #e2e8f0; /* bg-slate-200 */
+            background-size: cover;
+            background-position: center;
+         }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+    <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        <aside class="w-64 flex-shrink-0 bg-slate-900 text-white flex flex-col">
+            <div class="h-16 flex items-center justify-center text-2xl font-bold border-b border-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-400 mr-2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>OpiekaPRO</span>
+            </div>
+            <nav class="flex-1 px-4 py-6 space-y-2">
+                <a href="pacjenci.html" class="flex items-center px-4 py-2.5 bg-blue-600 text-white rounded-lg font-semibold shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Pacjenci
+                </a>
+                <a href="zadania.html" class="flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M21.2 15c.7-1.2 1-2.5.7-3.9-.6-2.4-3.4-4-6.2-3.3-1.3.3-2.4 1-3.2 2.1-.8-1.1-1.9-1.8-3.2-2.1-2.8-.7-5.6.9-6.2 3.3-.3 1.4 0 2.7.7 3.9l10 10Z"/></svg>
+                    Zadania
+                </a>
+                <a href="uprawnienia.html" class="flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    Uprawnienia
+                </a>
+                <a href="magazyn.html" class="flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                    Magazyn
+                </a>
+				<a href="raporty.html" class="nav-link flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>
+                    Raporty
+                </a>
+                <a href="uzytkownicy.html" class="flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M18 9a4 4 0 0 0-7.44 2.13"/><path d="M18 9a4 4 0 0 0-7.44 2.13"/><path d="M14 12a4 4 0 1 0-8 0c0 1.4.67 2.67 1.68 3.51L10 17.5V22h4v-4.5l2.32-1.99A3.95 3.95 0 0 0 14 12Z"/><path d="M6 9a4 4 0 0 1 7.4-2.32"/><path d="M6 9a4 4 0 0 1 7.4-2.32"/></svg>
+                    Użytkownicy
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-white shadow-sm h-16 flex items-center justify-between px-6">
+                <div>
+                    <h1 class="text-lg font-semibold text-slate-600">Dom Opieki "Słoneczna Przystań"</h1>
+                </div>
+                <div class="flex items-center">
+                    <span class="mr-4 text-slate-700">Witaj, <span class="font-bold">Piotr Ćwikliński</span></span>
+                    <a href="login.html" class="flex items-center text-red-500 hover:text-red-700 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mr-2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                        Wyloguj się
+                    </a>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-100 p-6">
+                <div class="container mx-auto">
+                    <div class="mb-6 text-sm text-slate-500">
+                        <a href="pacjenci.html" class="hover:underline cursor-pointer">Pacjenci</a> / <span class="font-semibold text-slate-700">Jan Kowalski</span>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row justify-between items-start mb-4">
+                        <div class="flex items-center gap-4">
+                            <h2 class="text-3xl font-bold text-slate-800">Pacjent: Jan Kowalski</h2>
+                             <a href="pacjenci.html" class="text-sm text-blue-600 hover:underline flex items-center gap-1 mt-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m15 18-6-6 6-6"/></svg>
+                                Powrót do listy
+                            </a>
+                        </div>
+                         <div id="actionButtons">
+                             <button id="editButton" class="flex items-center bg-white text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-50 transition-colors shadow-sm border border-slate-300 mt-2 sm:mt-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mr-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                                Edytuj dane
+                            </button>
+                             <div id="editModeButtons" style="display: none;" class="flex gap-2 mt-2 sm:mt-0">
+                                 <button id="cancelButton" class="bg-white py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50">Anuluj</button>
+                                 <button id="saveButton" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">Zapisz zmiany</button>
+                             </div>
+                         </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                        <a href="pacjent-zadania.html" class="flex items-center justify-center p-4 bg-white text-slate-700 rounded-xl shadow-lg hover:bg-slate-50 transition-transform transform hover:-translate-y-1 border border-slate-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-3 text-slate-500"><path d="M21.2 15c.7-1.2 1-2.5.7-3.9-.6-2.4-3.4-4-6.2-3.3-1.3.3-2.4 1-3.2 2.1-.8-1.1-1.9-1.8-3.2-2.1-2.8-.7-5.6.9-6.2 3.3-.3 1.4 0 2.7.7 3.9l10 10Z"></path></svg>
+                            <span class="font-semibold text-lg">Zadania</span>
+                            <span class="ml-2 bg-blue-100 text-blue-800 text-sm font-bold px-2.5 py-0.5 rounded-full">12</span>
+                        </a>
+                         <a href="pacjent-magazyn.html" class="flex items-center justify-center p-4 bg-white text-slate-700 rounded-xl shadow-lg hover:bg-slate-50 transition-transform transform hover:-translate-y-1 border border-slate-200">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-3 text-slate-500"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                            <span class="font-semibold text-lg">Magazyn</span>
+                        </a>
+                        <a href="pacjent-notatki.html" class="flex items-center justify-center p-4 bg-white text-slate-700 rounded-xl shadow-lg hover:bg-slate-50 transition-transform transform hover:-translate-y-1 border border-slate-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-3 text-slate-500"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+                            <span class="font-semibold text-lg">Notatki</span>
+                        </a>
+                         <a href="pacjent-choroby.html" class="flex items-center justify-center p-4 bg-white text-slate-700 rounded-xl shadow-lg hover:bg-slate-50 transition-transform transform hover:-translate-y-1 border border-slate-200">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-3 text-slate-500"><path d="M12 2a4.5 4.5 0 0 0-4.5 4.5v9a4.5 4.5 0 0 0 4.5 4.5 4.5 4.5 0 0 0 4.5-4.5v-9A4.5 4.5 0 0 0 12 2Z"/><path d="M10.5 6.5a1.5 1.5 0 0 1 3 0"/><path d="M10.5 10.5a1.5 1.5 0 0 1 3 0"/><path d="m7.5 14.5 4.5-4.5 4.5 4.5"/></svg>
+                            <span class="font-semibold text-lg">Choroby</span>
+                        </a>
+                    </div>
+
+                    <!-- Patient Info Card -->
+                    <div id="patientInfoCard" class="bg-white rounded-xl shadow-lg p-6 mb-6 border border-slate-200">
+                        <div class="flex flex-col md:flex-row items-start gap-8">
+                           <!-- Lewa kolumna: Zdjęcie i Wiek -->
+                           <div class="w-32 flex-shrink-0 flex flex-col items-center">
+                                <div id="photoPreviewWrapper" class="w-32 h-32 rounded-full relative group">
+                                    <img src="https://placehold.co/128x128/E2E8F0/475569?text=J.K." alt="Zdjęcie pacjenta" id="patientImage" class="rounded-full w-full h-full object-cover">
+                                    <label for="photoUpload" class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer edit-field rounded-full">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                                        <input type="file" id="photoUpload" class="hidden" accept="image/*">
+                                    </label>
+                                </div>
+                                <!-- Wiek (zawsze widoczny) -->
+                                <div class="mt-2 text-center w-full">
+                                     <label class="block text-sm font-medium text-slate-500">Wiek</label>
+                                     <p id="ageDisplay" class="text-lg font-semibold text-slate-800" data-field="age">-</p>
+                                 </div>
+                           </div>
+                           
+                           <!-- Prawa kolumna: Dane (NOWY UKŁAD) -->
+                           <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6 text-slate-700 flex-grow">
+                                <!-- Kolumna 1 Danych -->
+                                <div class="space-y-6">
+                                    <!-- Priorytet -->
+                                    <div class="data-pair">
+                                        <span class="display-field block text-sm font-medium text-slate-500">Priorytet</span>
+                                        <p class="display-field text-base text-slate-900 mt-1"><span data-field="priority" class="font-bold text-red-600">Wysoki</span></p>
+                                        <div class="edit-field">
+                                            <label for="editPriority" class="block text-sm font-medium text-slate-700">Priorytet</label>
+                                            <select id="editPriority" class="mt-1 block w-full px-3 py-2 border border-slate-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                                <option value="Niski">Niski</option>
+                                                <option value="Średni">Średni</option>
+                                                <option value="Wysoki" selected>Wysoki</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- Numer pokoju -->
+                                    <div class="data-pair">
+                                        <span class="display-field block text-sm font-medium text-slate-500">Numer pokoju</span>
+                                        <p class="display-field text-base text-slate-900 mt-1"><span data-field="roomNumber">101</span></p>
+                                        <div class="edit-field">
+                                            <label for="editRoomNumber" class="block text-sm font-medium text-slate-700">Numer pokoju</label>
+                                            <input type="text" id="editRoomNumber" class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                        </div>
+                                    </div>
+                                    <!-- Data urodzenia -->
+                                    <div class="data-pair">
+                                        <span class="display-field block text-sm font-medium text-slate-500">Data urodzenia</span>
+                                        <p class="display-field text-base text-slate-900 mt-1"><span data-field="birthDate">15.03.1942</span></p>
+                                        <div class="edit-field">
+                                            <label for="editBirthDate" class="block text-sm font-medium text-slate-700">Data urodzenia</label>
+                                            <input type="date" id="editBirthDate" class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                        </div>
+                                    </div>
+                                    <!-- PESEL -->
+                                    <div class="data-pair">
+                                        <span class="display-field block text-sm font-medium text-slate-500">PESEL</span>
+                                        <p class="display-field text-base text-slate-900 mt-1"><span data-field="pesel">420315*****</span></p>
+                                        <div class="edit-field">
+                                            <label for="editPesel" class="block text-sm font-medium text-slate-700">PESEL</label>
+                                            <input type="text" id="editPesel" class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Kolumna 2 Danych -->
+                                <div class="space-y-6">
+                                    <!-- Osoba kontaktowa -->
+                                    <div class="data-pair">
+                                        <span class="display-field block text-sm font-medium text-slate-500">Osoba kontaktowa</span>
+                                        <p class="display-field text-base text-slate-900 mt-1"><span data-field="contactName">Anna Kowalska</span></p>
+                                        <div class="edit-field">
+                                            <label for="editContactName" class="block text-sm font-medium text-slate-700">Osoba kontaktowa</label>
+                                            <input type="text" id="editContactName" class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                        </div>
+                                    </div>
+                                    <!-- Stopień pokrewieństwa -->
+                                    <div class="data-pair">
+                                        <span class="display-field block text-sm font-medium text-slate-500">Stopień pokrewieństwa</span>
+                                        <p class="display-field text-base text-slate-900 mt-1"><span data-field="contactRelationship">Córka</span></p>
+                                        <div class="edit-field">
+                                            <label for="editContactRelationship" class="block text-sm font-medium text-slate-700">Stopień pokrewieństwa</label>
+                                            <input type="text" id="editContactRelationship" class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                        </div>
+                                    </div>
+                                    <!-- Numer telefonu -->
+                                    <div class="data-pair">
+                                        <span class="display-field block text-sm font-medium text-slate-500">Numer telefonu</span>
+                                        <p class="display-field text-base text-slate-900 mt-1"><span data-field="contactPhone">+48 500 100 200</span></p>
+                                        <div class="edit-field">
+                                            <label for="editContactPhone" class="block text-sm font-medium text-slate-700">Numer telefonu</label>
+                                            <input type="tel" id="editContactPhone" class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                        </div>
+                                    </div>
+                                    <!-- Adres -->
+                                    <div class="data-pair">
+                                        <span class="display-field block text-sm font-medium text-slate-500">Adres</span>
+                                        <p class="display-field text-base text-slate-900 mt-1"><span data-field="address">ul. Kwiatowa 5, 00-001 Warszawa</span></p>
+                                        <div class="edit-field">
+                                            <label for="editAddress" class="block text-sm font-medium text-slate-700">Adres</label>
+                                            <input type="text" id="editAddress" class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                        </div>
+                                    </div>
+                                </div>
+                           </div>
+                        </div>
+                    </div>
+
+                    <!-- Medication Card -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 border border-slate-200">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-slate-800">Przyjmowane leki</h3>
+                            <button id="addMedicationBtn" class="flex items-center bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors shadow-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mr-2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                Dodaj
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead>
+                                    <tr class="border-b bg-slate-50 text-slate-600">
+                                        <th class="p-3 font-semibold">Nazwa leku</th>
+                                        <th class="p-3 font-semibold">Dawka</th>
+                                        <th class="p-3 font-semibold">Częstotliwość</th>
+                                        <th class="p-3 font-semibold text-right">Akcje</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="medicationTableBody">
+                                    <!-- Medication rows will be rendered here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Add Medication Modal -->
+    <div id="addMedicationModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-lg transform transition-all opacity-0 scale-95">
+             <form id="addMedicationForm" class="p-6 space-y-4">
+                 <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-slate-800">Dodaj lek</h3>
+                    <button type="button" id="closeAddMedModal" class="text-slate-400 hover:text-slate-800 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+                 <div>
+                    <label for="medSearchInput" class="block text-sm font-medium text-slate-700">Wyszukaj lek w magazynie</label>
+                    <div class="relative">
+                        <input type="text" id="medSearchInput" autocomplete="off" class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Wpisz min. 3 litery nazwy...">
+                        <div id="medSuggestionsContainer" class="absolute z-10 w-full bg-white border border-slate-300 rounded-md mt-1 shadow-lg hidden max-h-40 overflow-y-auto">
+                            <!-- Suggestions will be populated here -->
+                        </div>
+                         <input type="hidden" id="selectedMedName">
+                    </div>
+                </div>
+                 <div>
+                    <label for="medDose" class="block text-sm font-medium text-slate-700">Dawka</label>
+                    <input type="text" id="medDose" required class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="np. 75 mg, 1 tabletka">
+                </div>
+                 <div>
+                    <label for="medFrequency" class="block text-sm font-medium text-slate-700">Częstotliwość</label>
+                    <input type="text" id="medFrequency" required class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="np. 1 x dziennie, rano i wieczorem">
+                </div>
+                 <div class="pt-4 flex justify-end gap-3">
+                    <button type="button" id="cancelAddMedModal" class="bg-white py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50">Anuluj</button>
+                    <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">Dodaj lek</button>
+                </div>
+             </form>
+        </div>
+    </div>
+
+    <!-- Delete Medication Confirmation Modal -->
+    <div id="deleteMedConfirmationModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-md transform transition-all opacity-0 scale-95">
+             <div class="p-6 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-red-500 mx-auto mb-4"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <h3 class="text-xl font-bold text-slate-800">Potwierdź usunięcie</h3>
+                <p class="text-slate-500 mt-2">Czy na pewno chcesz usunąć lek <strong id="medNameToDelete" class="font-medium"></strong> z listy przyjmowanych?</p>
+            </div>
+            <div class="bg-slate-50 px-6 py-4 flex justify-end gap-3 rounded-b-xl">
+                <button type="button" id="cancelDeleteMedBtn" class="bg-white py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50">Anuluj</button>
+                <button type="button" id="confirmDeleteMedBtn" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700">Usuń</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Warning Modal -->
+    <div id="editWarningModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-sm transform transition-all opacity-0 scale-95">
+             <div class="p-6 text-center">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 text-yellow-500 mx-auto mb-3"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <h3 class="text-lg font-semibold text-slate-800">Uwaga!</h3>
+                <p class="text-slate-600 mt-1">Edytujesz dane pacjenta.</p>
+                <button type="button" id="confirmEditWarning" class="mt-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">Rozumiem</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Discard Changes Modal -->
+    <div id="discardChangesModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-md transform transition-all opacity-0 scale-95">
+             <div class="p-6 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-yellow-500 mx-auto mb-4"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <h3 class="text-xl font-bold text-slate-800">Niezapisane zmiany</h3>
+                <p class="text-slate-500 mt-2">Czy na pewno chcesz anulować edycję? Wprowadzone zmiany zostaną utracone.</p>
+            </div>
+            <div class="bg-slate-50 px-6 py-4 flex justify-end gap-3 rounded-b-xl">
+                <button type="button" id="stayDiscardBtn" class="bg-white py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50">Zostań w edycji</button>
+                <button type="button" id="leaveDiscardBtn" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700">Anuluj zmiany</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Save Changes Confirmation Modal -->
+    <div id="saveChangesModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-lg transform transition-all opacity-0 scale-95">
+             <div class="p-6">
+                 <div class="flex items-start gap-4">
+                     <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-blue-600"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                    </div>
+                    <div class="mt-0 text-left">
+                        <h3 class="text-xl font-bold text-slate-800" id="modal-title">Potwierdź zmiany</h3>
+                        <div class="mt-3 text-sm text-slate-600">
+                            <p class="mb-2">Wprowadzono następujące zmiany:</p>
+                            <div id="changesList" class="max-h-60 overflow-y-auto pr-2">
+                                <!-- List of changes will be inserted here -->
+                            </div>
+                            <p class="mt-4 font-medium">Czy chcesz zapisać te zmiany?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-slate-50 px-6 py-4 flex justify-end gap-3 rounded-b-xl">
+                <button type="button" id="cancelSaveBtn" class="bg-white py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50">Anuluj</button>
+                <button type="button" id="confirmSaveBtn" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">Zapisz</button>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Mock Data ---
+        let currentMedications = [
+            { id: 1, name: 'Polocard', dose: '75 mg', frequency: '1 x dziennie' },
+            { id: 2, name: 'Metformax', dose: '500 mg', frequency: '2 x dziennie (rano i wieczorem)' },
+            { id: 3, name: 'Vitaminum D3', dose: '2000 j.m.', frequency: '1 x dziennie' }
+        ];
+         const warehouseMeds = [
+             { name: 'Paracetamol 500mg', owner: 'Dom Opieki' }, { name: 'Polocard 75mg', owner: 'Dom Opieki' },
+            { name: 'Polocard 75mg', owner: 'Jan Kowalski' }, { name: 'Metformax 500mg', owner: 'Dom Opieki' },
+            { name: 'Vitaminum D3 2000j.m.', owner: 'Dom Opieki' }, { name: 'Aspirin Cardio', owner: 'Dom Opieki' },
+            { name: 'Insulina', owner: 'Anna Nowak' }, { name: 'Furosemid', owner: 'Dom Opieki' },
+         ];
+        const currentPatientName = "Jan Kowalski";
+
+        // --- Elements ---
+        const medicationTableBody = document.getElementById('medicationTableBody');
+        const addMedicationBtn = document.getElementById('addMedicationBtn');
+        const addMedicationModal = document.getElementById('addMedicationModal');
+        const addMedModalContent = addMedicationModal.querySelector('.modal-content');
+        const closeAddMedModalBtn = document.getElementById('closeAddMedModal');
+        const cancelAddMedModalBtn = document.getElementById('cancelAddMedModal');
+        const addMedicationForm = document.getElementById('addMedicationForm');
+        const medSearchInput = document.getElementById('medSearchInput');
+        const medSuggestionsContainer = document.getElementById('medSuggestionsContainer');
+        const selectedMedNameInput = document.getElementById('selectedMedName');
+        const medDoseInput = document.getElementById('medDose');
+        const medFrequencyInput = document.getElementById('medFrequency');
+
+        const deleteMedModal = document.getElementById('deleteMedConfirmationModal');
+        const deleteMedModalContent = deleteMedModal.querySelector('.modal-content');
+        const medNameToDeleteSpan = document.getElementById('medNameToDelete');
+        const cancelDeleteMedBtn = document.getElementById('cancelDeleteMedBtn');
+        const confirmDeleteMedBtn = document.getElementById('confirmDeleteMedBtn');
+        let medToDeleteId = null;
+
+         // --- Elements for Edit Mode ---
+        const editButton = document.getElementById('editButton');
+        const cancelButton = document.getElementById('cancelButton');
+        const saveButton = document.getElementById('saveButton');
+        const editModeButtons = document.getElementById('editModeButtons');
+        const patientInfoCard = document.getElementById('patientInfoCard');
+        const displayFields = patientInfoCard.querySelectorAll('.display-field');
+        const editFields = patientInfoCard.querySelectorAll('.edit-field');
+        const photoUpload = document.getElementById('photoUpload');
+        const patientImage = document.getElementById('patientImage');
+        const photoPreviewWrapper = document.getElementById('photoPreviewWrapper');
+        const ageDisplay = document.getElementById('ageDisplay');
+        const birthDateEditInput = document.getElementById('editBirthDate');
+        const priorityDisplay = patientInfoCard.querySelector('[data-field="priority"]');
+        const priorityEditSelect = document.getElementById('editPriority');
+
+
+        let isEditMode = false;
+        let originalValues = {}; // Store original values before editing
+
+        // --- New Modal Elements ---
+        const editWarningModal = document.getElementById('editWarningModal');
+        const editWarningModalContent = editWarningModal.querySelector('.modal-content');
+        const confirmEditWarningBtn = document.getElementById('confirmEditWarning');
+
+        const discardChangesModal = document.getElementById('discardChangesModal');
+        const discardChangesModalContent = discardChangesModal.querySelector('.modal-content');
+        const stayDiscardBtn = document.getElementById('stayDiscardBtn');
+        const leaveDiscardBtn = document.getElementById('leaveDiscardBtn');
+
+        const saveChangesModal = document.getElementById('saveChangesModal');
+        const saveChangesModalContent = saveChangesModal.querySelector('.modal-content');
+        const changesListDiv = document.getElementById('changesList');
+        const cancelSaveBtn = document.getElementById('cancelSaveBtn');
+        const confirmSaveBtn = document.getElementById('confirmSaveBtn');
+
+        const fieldLabels = {
+            editContactName: 'Osoba kontaktowa', editBirthDate: 'Data urodzenia',
+            editContactRelationship: 'Stopień pokrewieństwa', editPesel: 'PESEL', editContactPhone: 'Numer telefonu',
+            editAddress: 'Adres', editRoomNumber: 'Numer pokoju', photoUpload: 'Zdjęcie', editPriority: 'Priorytet'
+        };
+        
+        const priorityClasses = {
+            'Wysoki': 'text-red-600',
+            'Średni': 'text-yellow-600',
+            'Niski': 'text-green-600'
+        };
+
+
+        // --- Functions ---
+        function renderMedicationTable() {
+             medicationTableBody.innerHTML = '';
+            if (currentMedications.length === 0) {
+                 medicationTableBody.innerHTML = '<tr><td colspan="4" class="text-center p-4 text-slate-500">Pacjent aktualnie nie przyjmuje żadnych leków.</td></tr>';
+                 return;
+            }
+            currentMedications.forEach(med => {
+                const row = document.createElement('tr');
+                row.className = 'border-b hover:bg-slate-50';
+                row.innerHTML = `
+                    <td class="p-3">${med.name}</td>
+                    <td class="p-3">${med.dose}</td>
+                    <td class="p-3">${med.frequency}</td>
+                    <td class="p-3 text-right">
+                        <button class="delete-med-btn text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-100" data-id="${med.id}" data-name="${med.name}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 pointer-events-none"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                        </button>
+                    </td>
+                `;
+                medicationTableBody.appendChild(row);
+            });
+         }
+        function openModal(modal, content) {
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => { if (content) { content.classList.add('scale-100', 'opacity-100'); content.classList.remove('scale-95', 'opacity-0');} }, 10);
+         }
+        function closeModal(modal, content) {
+             if (content) { content.classList.add('scale-95', 'opacity-0'); content.classList.remove('scale-100', 'opacity-100');}
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 200);
+         }
+
+         function calculateAge(birthDateString) {
+            if (!birthDateString) return '-';
+            try {
+                const birthDate = new Date(birthDateString);
+                const today = new Date();
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const m = today.getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+                return age >= 0 ? age : '-';
+            } catch (e) { return '-'; }
+        }
+        function updateAgeDisplay(birthDateString) {
+             const age = calculateAge(birthDateString);
+             ageDisplay.textContent = age !== '-' ? `${age} lat` : '-';
+             const ageDisplaySpan = patientInfoCard.querySelector('[data-field="age"]');
+             if(ageDisplaySpan) ageDisplaySpan.textContent = age;
+        }
+
+         function storeOriginalValues() {
+             originalValues = {};
+             // Store values from currently visible display fields
+             displayFields.forEach(p => {
+                 const span = p.querySelector('span[data-field]');
+                 if (span) {
+                     const fieldName = span.dataset.field;
+                     const editFieldId = `edit${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}`;
+                     if(fieldName === 'birthDate'){
+                         const parts = span.textContent.trim().split('.');
+                         if(parts.length === 3) originalValues[editFieldId] = `${parts[2]}-${parts[1]}-${parts[0]}`; // YYYY-MM-DD
+                         else originalValues[editFieldId] = '';
+                     } else if (fieldName === 'priority') {
+                          originalValues['editPriority'] = span.textContent.trim();
+                     } else {
+                         originalValues[editFieldId] = span.textContent.trim();
+                     }
+                 }
+             });
+             const peselSpan = patientInfoCard.querySelector('[data-field="pesel"]');
+             originalValues['editPesel'] = peselSpan ? peselSpan.textContent.trim() : ''; // Store masked value
+             originalValues['patientImageSrc'] = patientImage.src; // Store from img src
+             patientImage.dataset.changed = "false"; // Reset photo change flag
+         }
+        function restoreOriginalValues() {
+             editFields.forEach(container => {
+                 const input = container.querySelector('input, select');
+                 if (input && originalValues[input.id] !== undefined) input.value = originalValues[input.id];
+             });
+             if (originalValues['patientImageSrc']) {
+                 patientImage.src = originalValues['patientImageSrc']; // Restore img src
+                 photoUpload.value = ""; // Clear file input
+             }
+             patientImage.dataset.changed = "false"; // Reset photo change flag
+             updateAgeDisplay(originalValues['editBirthDate']);
+        }
+        function populateEditFields() {
+             document.getElementById('editContactName').value = originalValues['editContactName'] || '';
+             document.getElementById('editBirthDate').value = originalValues['editBirthDate'] || '';
+             document.getElementById('editContactRelationship').value = originalValues['editContactRelationship'] || '';
+             // In real app, you'd fetch full PESEL if user has 'pesel' permission
+             // For demo, we'll just show the masked value
+             document.getElementById('editPesel').value = originalValues['editPesel'] || '';
+             document.getElementById('editContactPhone').value = originalValues['editContactPhone'] || '';
+             document.getElementById('editAddress').value = originalValues['editAddress'] || '';
+             document.getElementById('editRoomNumber').value = originalValues['editRoomNumber'] || '';
+             priorityEditSelect.value = originalValues['editPriority'] || 'Średni';
+             updateAgeDisplay(originalValues['editBirthDate'] || '');
+         }
+        function toggleEditMode(save = false) {
+            isEditMode = !isEditMode;
+            displayFields.forEach(el => el.style.display = isEditMode ? 'none' : 'block');
+            editFields.forEach(el => el.style.display = isEditMode ? 'block' : 'none');
+            ageDisplay.closest('div').style.display = 'block';
+
+            editButton.style.display = isEditMode ? 'none' : 'flex';
+            editModeButtons.style.display = isEditMode ? 'flex' : 'none';
+
+            if (isEditMode) {
+                 storeOriginalValues();
+                 populateEditFields();
+            } else {
+                 if (!save) {
+                    restoreOriginalValues();
+                 } else {
+                     updateAgeDisplay(document.getElementById('editBirthDate').value);
+                 }
+             }
+        }
+        function getChangedFields() {
+             const changes = [];
+            editFields.forEach(container => {
+                const input = container.querySelector('input, select');
+                if (input) {
+                    const fieldId = input.id;
+                    const currentValue = input.value;
+                    const originalValue = originalValues[fieldId];
+                    if (String(currentValue) !== String(originalValue)) {
+                        changes.push({
+                            field: fieldLabels[fieldId] || fieldId,
+                            from: originalValue || 'Brak',
+                            to: currentValue || 'Brak'
+                        });
+                    }
+                }
+            });
+             if (patientImage.dataset.changed === "true") {
+                changes.push({ field: fieldLabels['photoUpload'], from: 'Poprzednie zdjęcie', to: 'Nowe zdjęcie' });
+            }
+            return changes;
+         }
+
+         function setPriorityColor(priorityValue) {
+            priorityDisplay.className = 'font-bold'; // Reset classes
+            const colorClass = priorityClasses[priorityValue] || 'text-slate-700';
+            priorityDisplay.classList.add(colorClass);
+         }
+
+        // --- Event Listeners ---
+
+        // Edit Mode Toggle with Warning
+        editButton.addEventListener('click', () => {
+            openModal(editWarningModal, editWarningModalContent);
+        });
+        confirmEditWarningBtn.addEventListener('click', () => {
+             closeModal(editWarningModal, editWarningModalContent);
+             toggleEditMode(false);
+        });
+        editWarningModal.addEventListener('click', e => { if (e.target === editWarningModal) closeModal(editWarningModal, editWarningModalContent); });
+
+
+        // Cancel Edit with Discard Confirmation
+        cancelButton.addEventListener('click', () => {
+             let changed = false;
+             editFields.forEach(container => {
+                 const input = container.querySelector('input, select');
+                 if(input && input.value !== originalValues[input.id]){ changed = true; }
+             });
+              if (patientImage.dataset.changed === "true") { changed = true; }
+
+            if (changed) {
+                openModal(discardChangesModal, discardChangesModalContent);
+            } else {
+                toggleEditMode(false);
+            }
+        });
+        stayDiscardBtn.addEventListener('click', () => closeModal(discardChangesModal, discardChangesModalContent));
+        leaveDiscardBtn.addEventListener('click', () => {
+             closeModal(discardChangesModal, discardChangesModalContent);
+             toggleEditMode(false);
+        });
+        discardChangesModal.addEventListener('click', e => { if (e.target === discardChangesModal) closeModal(discardChangesModal, discardChangesModalContent); });
+
+
+        // Save Edit with Confirmation Summary
+        saveButton.addEventListener('click', () => {
+            const changes = getChangedFields();
+            if (changes.length === 0) {
+                 console.log("No changes detected.");
+                 toggleEditMode(true); return;
+            }
+            let changesHtml = '<ul>';
+            changes.forEach(change => {
+                const fromDisplay = String(change.from).length > 30 ? String(change.from).substring(0, 27) + '...' : change.from;
+                const toDisplay = String(change.to).length > 30 ? String(change.to).substring(0, 27) + '...' : change.to;
+                changesHtml += `<li><strong>${change.field}:</strong> ${fromDisplay} &rarr; ${toDisplay}</li>`;
+            });
+            changesHtml += '</ul>';
+            changesListDiv.innerHTML = changesHtml;
+            openModal(saveChangesModal, saveChangesModalContent);
+        });
+        cancelSaveBtn.addEventListener('click', () => closeModal(saveChangesModal, saveChangesModalContent));
+        confirmSaveBtn.addEventListener('click', () => {
+            console.log("Saving changes confirmed...");
+             // Update display fields from edit fields
+             patientInfoCard.querySelector('[data-field="contactName"]').textContent = document.getElementById('editContactName').value;
+             const birthDateValue = document.getElementById('editBirthDate').value;
+             if(birthDateValue) { const [y, m, d] = birthDateValue.split('-'); patientInfoCard.querySelector('[data-field="birthDate"]').textContent = `${d}.${m}.${y}`; }
+             else { patientInfoCard.querySelector('[data-field="birthDate"]').textContent = ''; }
+             patientInfoCard.querySelector('[data-field="contactRelationship"]').textContent = document.getElementById('editContactRelationship').value;
+             const peselValue = document.getElementById('editPesel').value;
+             patientInfoCard.querySelector('[data-field="pesel"]').textContent = peselValue.length === 11 ? peselValue.substring(0, 6) + '*****' : peselValue;
+             patientInfoCard.querySelector('[data-field="contactPhone"]').textContent = document.getElementById('editContactPhone').value;
+             patientInfoCard.querySelector('[data-field="address"]').textContent = document.getElementById('editAddress').value;
+             patientInfoCard.querySelector('[data-field="roomNumber"]').textContent = document.getElementById('editRoomNumber').value;
+             
+             const newPriority = priorityEditSelect.value;
+             priorityDisplay.textContent = newPriority;
+             setPriorityColor(newPriority); // Update color on save
+
+             updateAgeDisplay(birthDateValue);
+
+            closeModal(saveChangesModal, saveChangesModalContent);
+            toggleEditMode(true);
+        });
+        saveChangesModal.addEventListener('click', e => { if (e.target === saveChangesModal) closeModal(saveChangesModal, saveChangesModalContent); });
+
+
+        // Update Age on Birth Date Change in Edit Mode
+        birthDateEditInput.addEventListener('change', () => { updateAgeDisplay(birthDateEditInput.value); });
+        birthDateEditInput.addEventListener('input', () => { updateAgeDisplay(birthDateEditInput.value); });
+
+
+        // --- Medication Management Logic ---
+        addMedicationBtn.addEventListener('click', () => {
+             addMedicationForm.reset(); medSuggestionsContainer.classList.add('hidden'); selectedMedNameInput.value = '';
+             openModal(addMedicationModal, addMedModalContent); medSearchInput.focus();
+        });
+        closeAddMedModalBtn.addEventListener('click', () => closeModal(addMedicationModal, addMedModalContent));
+        cancelAddMedModalBtn.addEventListener('click', () => closeModal(addMedicationModal, addMedModalContent));
+        addMedicationModal.addEventListener('click', e => { if (e.target === addMedicationModal) closeModal(addMedicationModal, addMedModalContent); });
+        
+        medSearchInput.addEventListener('input', () => {
+             const query = medSearchInput.value.toLowerCase().trim(); medSuggestionsContainer.innerHTML = ''; selectedMedNameInput.value = '';
+            if (query.length < 3) { medSuggestionsContainer.classList.add('hidden'); return; }
+             const patientMeds = warehouseMeds.filter(item => item.owner === currentPatientName && item.name.toLowerCase().includes(query));
+            const careHomeMeds = warehouseMeds.filter(item => item.owner === 'Dom Opieki' && item.name.toLowerCase().includes(query));
+            const combinedResults = [...patientMeds, ...careHomeMeds.filter(chItem => !patientMeds.some(pItem => pItem.name === chItem.name)) ];
+            if (combinedResults.length > 0) {
+                 const list = document.createElement('ul'); list.className = 'max-h-40 overflow-y-auto';
+                combinedResults.forEach(item => {
+                     const listItem = document.createElement('li'); listItem.className = 'px-4 py-2 hover:bg-slate-100 cursor-pointer';
+                    listItem.innerHTML = `${item.name} <span class="text-xs ${item.owner === currentPatientName ? 'text-green-600 font-semibold' : 'text-slate-500'}">(${item.owner})</span>`;
+                    listItem.addEventListener('click', () => { medSearchInput.value = item.name; selectedMedNameInput.value = item.name; medSuggestionsContainer.classList.add('hidden'); medSuggestionsContainer.innerHTML = ''; medDoseInput.focus(); });
+                    list.appendChild(listItem);
+                });
+                medSuggestionsContainer.appendChild(list); medSuggestionsContainer.classList.remove('hidden');
+            } else { medSuggestionsContainer.innerHTML = '<div class="px-4 py-2 text-slate-500">Brak pasujących leków w magazynie.</div>'; medSuggestionsContainer.classList.remove('hidden'); }
+        });
+        
+        document.addEventListener('click', (e) => { 
+            if (medSuggestionsContainer && !medSearchInput.contains(e.target) && !medSuggestionsContainer.contains(e.target)) { 
+                medSuggestionsContainer.classList.add('hidden'); 
+            } 
+        });
+        
+        addMedicationForm.addEventListener('submit', (e) => {
+            e.preventDefault(); 
+            const medName = selectedMedNameInput.value || medSearchInput.value; 
+            const dose = medDoseInput.value; 
+            const frequency = medFrequencyInput.value;
+            if (medName && dose && frequency) { 
+                const newMed = { id: Date.now(), name: medName, dose: dose, frequency: frequency }; 
+                currentMedications.push(newMed); 
+                renderMedicationTable(); 
+                closeModal(addMedicationModal, addMedModalContent); 
+            }
+            else { console.error("Proszę wypełnić wszystkie pola: nazwa leku, dawka i częstotliwość."); }
+        });
+        
+        medicationTableBody.addEventListener('click', (e) => {
+            const deleteButton = e.target.closest('.delete-med-btn');
+            if (deleteButton) { 
+                medToDeleteId = parseInt(deleteButton.dataset.id); 
+                medNameToDeleteSpan.textContent = deleteButton.dataset.name; 
+                openModal(deleteMedModal, deleteMedModalContent); 
+            }
+        });
+        
+        cancelDeleteMedBtn.addEventListener('click', () => closeModal(deleteMedModal, deleteMedModalContent));
+        deleteMedModal.addEventListener('click', e => { if (e.target === deleteMedModal) closeModal(deleteMedModal, deleteMedModalContent); });
+        confirmDeleteMedBtn.addEventListener('click', () => {
+            if (medToDeleteId !== null) { 
+                currentMedications = currentMedications.filter(med => med.id !== medToDeleteId); 
+                renderMedicationTable(); 
+            }
+            closeModal(deleteMedModal, deleteMedModalContent); 
+            medToDeleteId = null;
+        });
+
+        // Photo upload preview
+        photoUpload.addEventListener('change', function(event) {
+             const file = event.target.files[0];
+            if (file && isEditMode) { 
+                const reader = new FileReader(); 
+                reader.onload = function(e) { 
+                    patientImage.src = e.target.result; // Update the img src
+                    patientImage.dataset.changed = "true"; // Mark as changed
+                }; 
+                reader.readAsDataURL(file); 
+            }
+        });
+
+        // Initial Setup
+        renderMedicationTable();
+        // Calculate initial age on load
+        const initialBirthDateDisplay = patientInfoCard.querySelector('[data-field="birthDate"]').textContent.trim();
+        const initialBirthDateParts = initialBirthDateDisplay.split('.');
+        if (initialBirthDateParts.length === 3) {
+            updateAgeDisplay(`${initialBirthDateParts[2]}-${initialBirthDateParts[1]}-${initialBirthDateParts[0]}`);
+        } else { updateAgeDisplay(''); }
+        
+        // Set initial priority color
+        setPriorityColor(priorityDisplay.textContent.trim());
+    });
+</script>
+</body>
+</html>
+

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zarządzanie Użytkownikami - OpiekaPRO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+        /* Custom checkbox styles */
+        .permission-checkbox:checked {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+        .permission-checkbox:checked::before {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            width: 100%;
+            height: 100%;
+        }
+        .permission-checkbox {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid #cbd5e1;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+    <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        <aside class="w-64 flex-shrink-0 bg-slate-900 text-white flex flex-col">
+            <div class="h-16 flex items-center justify-center text-2xl font-bold border-b border-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-400 mr-2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>OpiekaPRO</span>
+            </div>
+            <nav id="sidebarNav" class="flex-1 px-4 py-6 space-y-2">
+                <a href="pacjenci.html" class="nav-link flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Pacjenci
+                </a>
+                <a href="zadania.html" class="nav-link flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M21.2 15c.7-1.2 1-2.5.7-3.9-.6-2.4-3.4-4-6.2-3.3-1.3.3-2.4 1-3.2 2.1-.8-1.1-1.9-1.8-3.2-2.1-2.8-.7-5.6.9-6.2 3.3-.3 1.4 0 2.7.7 3.9l10 10Z"/></svg>
+                    Zadania
+                </a>
+                <a href="uprawnienia.html" class="nav-link flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    Uprawnienia
+                </a>
+                <a href="magazyn.html" class="nav-link flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                    Magazyn
+                </a>
+				<a href="raporty.html" class="nav-link flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>
+                    Raporty
+                </a>
+                <a href="uzytkownicy.html" class="nav-link flex items-center px-4 py-2.5 bg-blue-600 text-white rounded-lg font-semibold shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M18 9a4 4 0 0 0-7.44 2.13"/><path d="M18 9a4 4 0 0 0-7.44 2.13"/><path d="M14 12a4 4 0 1 0-8 0c0 1.4.67 2.67 1.68 3.51L10 17.5V22h4v-4.5l2.32-1.99A3.95 3.95 0 0 0 14 12Z"/><path d="M6 9a4 4 0 0 1 7.4-2.32"/><path d="M6 9a4 4 0 0 1 7.4-2.32"/></svg>
+                    Użytkownicy
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-white shadow-sm h-16 flex items-center justify-between px-6">
+                <div>
+                    <h1 class="text-lg font-semibold text-slate-600">Dom Opieki "Słoneczna Przystań"</h1>
+                </div>
+                <div class="flex items-center">
+                    <span class="mr-4 text-slate-700">Witaj, <span class="font-bold">Piotr Ćwikliński</span></span>
+                    <a href="login.html" class="nav-link flex items-center text-red-500 hover:text-red-700 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mr-2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                        Wyloguj się
+                    </a>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-100 p-6">
+                <div class="container mx-auto">
+                    <div class="mb-6">
+                         <h2 class="text-3xl font-bold text-slate-800">Zarządzanie Użytkownikami</h2>
+                         <p class="text-slate-500 mt-1">Dodawaj, edytuj i zarządzaj kontami personelu.</p>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+                         <div class="w-full sm:w-auto flex-1">
+                            <input type="text" placeholder="Szukaj użytkownika..." class="w-full max-w-xs px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition">
+                         </div>
+                        <div class="flex gap-2 w-full sm:w-auto">
+                            <button id="addUserBtn" class="flex items-center bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors shadow-sm w-full sm:w-auto justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mr-2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+                                Dodaj użytkownika
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Users Table -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-slate-200">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead class="bg-slate-50">
+                                    <tr>
+                                        <th class="p-4 font-semibold text-slate-600">Użytkownik</th>
+                                        <th class="p-4 font-semibold text-slate-600">Telefon</th>
+                                        <th class="p-4 font-semibold text-slate-600">Rola</th>
+                                        <th class="p-4 font-semibold text-slate-600">Status</th>
+                                        <th class="p-4 font-semibold text-slate-600 text-right">Akcje</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="users-table-body" class="divide-y divide-slate-200">
+                                    <!-- Dane użytkowników zostaną wstawione tutaj przez JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Add/Edit User Modal -->
+    <div id="userModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
+        <div id="userModalContent" class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-2xl transform transition-all opacity-0 scale-95 max-h-[90vh] flex flex-col">
+            <form id="userForm" class="flex-1 flex flex-col">
+                <div class="p-6 border-b">
+                    <div class="flex justify-between items-center">
+                        <h3 id="modalTitle" class="text-xl font-bold text-slate-800">Dodaj nowego użytkownika</h3>
+                        <button type="button" id="closeUserModal" class="text-slate-400 hover:text-slate-800 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6 space-y-4 overflow-y-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="firstName" class="block text-sm font-medium text-slate-700">Imię</label>
+                            <input type="text" id="firstName" class="form-input mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="lastName" class="block text-sm font-medium text-slate-700">Nazwisko</label>
+                            <input type="text" id="lastName" class="form-input mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-slate-700">Adres e-mail</label>
+                            <input type="email" id="email" class="form-input mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-slate-700">Telefon</label>
+                            <input type="tel" id="phone" class="form-input mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                    </div>
+                    
+                    <div class="pt-4">
+                        <h4 class="text-lg font-semibold text-slate-800 border-b pb-2 mb-3">Uprawnienia do modułów</h4>
+                        <div class="space-y-3">
+                            <!-- Permissions Table Header -->
+                            <div class="grid grid-cols-5 gap-2 text-center font-semibold text-slate-600 text-sm">
+                                <div class="text-left">Moduł</div>
+                                <div>Odczyt</div>
+                                <div>Edycja</div>
+                                <div>Dodawanie</div>
+                                <div>Usuwanie</div>
+                            </div>
+                            <!-- Permissions Rows -->
+                            <div id="modalPermissionsContainer">
+                                <!-- Dynamicznie generowane wiersze uprawnień -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="p-6 mt-auto bg-slate-50 border-t flex justify-end gap-3">
+                    <button type="button" id="cancelUserModal" class="nav-link bg-white py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Anuluj</button>
+                    <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Zapisz użytkownika</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteConfirmationModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-md transform transition-all opacity-0 scale-95">
+             <div class="p-6 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-red-500 mx-auto mb-4"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <h3 class="text-xl font-bold text-slate-800">Potwierdź usunięcie</h3>
+                <p class="text-slate-500 mt-2">Czy na pewno chcesz usunąć użytkownika <strong id="userNameToDelete" class="font-medium"></strong>?</p>
+            </div>
+            <div class="bg-slate-50 px-6 py-4 flex justify-end gap-3 rounded-b-xl">
+                <button type="button" id="cancelDeleteBtn" class="bg-white py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50">Anuluj</button>
+                <button type="button" id="confirmDeleteBtn" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700">Usuń</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Unsaved Changes Modal -->
+    <div id="confirmationModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-md transform transition-all opacity-0 scale-95">
+             <div class="p-6 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-yellow-500 mx-auto mb-4"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <h3 class="text-xl font-bold text-slate-800">Niezapisane zmiany</h3>
+                <p class="text-slate-500 mt-2">Masz niezapisane zmiany. Czy na pewno chcesz opuścić formularz?</p>
+            </div>
+            <div class="bg-slate-50 px-6 py-4 flex justify-end gap-3 rounded-b-xl">
+                <button type="button" id="stayBtn" class="bg-white py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50">Zostań</button>
+                <button type="button" id="leaveBtn" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700">Opuść</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dane
+            let users = [
+				{ id: 1, firstName: 'Piotr', lastName: 'Ćwikliński', email: 'hunterpcool@wp.pl', phone: '500 708 989', role: 'SUPERUSER', status: 'Aktywny' },
+                { id: 2, firstName: 'Alicja', lastName: 'Nowicka', email: 'a.nowicka@email.com', phone: '123-456-789', role: 'Administrator', status: 'Aktywny' },
+                { id: 3, firstName: 'Bartosz', lastName: 'Kowalczyk', email: 'b.kowalczyk@email.com', phone: '234-567-890', role: 'Pielęgniarz', status: 'Aktywny' },
+                { id: 4, firstName: 'Celina', lastName: 'Zielińska', email: 'c.zielinska@email.com', phone: '345-678-901', role: 'Opiekunka', status: 'Nieaktywny' },
+                { id: 5, firstName: 'Damian', lastName: 'Woźniak', email: 'd.wozniak@email.com', phone: '456-789-012', role: 'Lekarz', status: 'Aktywny' },
+            ];
+            
+            const modules = ['Pacjenci', 'Zadania', 'Magazyn', 'Użytkownicy', 'Uprawnienia'];
+            const permissionsContainer = document.getElementById('modalPermissionsContainer');
+
+            // --- Generowanie wierszy uprawnień w modalu ---
+            function generatePermissionsRows() {
+                permissionsContainer.innerHTML = '';
+                 modules.forEach(module => {
+                    const modId = module.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-');
+                    const row = `
+                    <div class="grid grid-cols-5 gap-2 items-center bg-slate-50 p-2 rounded-lg">
+                        <div class="font-medium text-slate-800">${module}</div>
+                        <div class="flex justify-center"><input type="checkbox" name="read-${modId}" class="permission-checkbox form-input"></div>
+                        <div class="flex justify-center"><input type="checkbox" name="edit-${modId}" class="permission-checkbox form-input"></div>
+                        <div class="flex justify-center"><input type="checkbox" name="add-${modId}" class="permission-checkbox form-input"></div>
+                        <div class="flex justify-center"><input type="checkbox" name="delete-${modId}" class="permission-checkbox form-input"></div>
+                    </div>
+                    `;
+                    permissionsContainer.innerHTML += row;
+                });
+            }
+            
+            // --- Renderowanie tabeli ---
+            const tableBody = document.getElementById('users-table-body');
+            function renderTable() {
+                tableBody.innerHTML = '';
+                const roleClasses = { 
+                    'Lekarz': 'bg-yellow-100 text-yellow-800',
+					'Lekarka': 'bg-yellow-100 text-yellow-800',
+					'Administrator': 'bg-purple-100 text-purple-800', 
+                    'Pielęgniarz': 'bg-blue-100 text-blue-800',
+                    'Pielęgniarka': 'bg-blue-100 text-blue-800',
+                    'Opiekun': 'bg-green-100 text-green-800',
+					'Opiekunka': 'bg-green-100 text-green-800'
+                };
+                 const statusClasses = { 
+                    'Aktywny': 'bg-green-100 text-green-800', 
+                    'Nieaktywny': 'bg-red-100 text-red-800'
+                };
+                
+                users.forEach(user => {
+                    tableBody.innerHTML += `
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-4">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 rounded-full mr-3 bg-slate-200 flex items-center justify-center font-bold text-slate-600">${user.firstName.charAt(0)}${user.lastName.charAt(0)}</div>
+                                    <div>
+                                        <div class="font-semibold text-slate-800">${user.firstName} ${user.lastName}</div>
+                                        <div class="text-sm text-slate-500">${user.email}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-4 text-slate-600">${user.phone}</td>
+                            <td class="p-4"><span class="px-2 py-1 text-xs font-semibold rounded-full ${roleClasses[user.role] || 'bg-gray-100 text-gray-800'}">${user.role}</span></td>
+                            <td class="p-4"><span class="px-2 py-1 text-xs font-semibold rounded-full ${statusClasses[user.status]}">${user.status}</span></td>
+                            <td class="p-4 text-right">
+                                <a href="uzytkownik-szczegoly.html" class="inline-block text-slate-400 hover:text-blue-600 p-2 rounded-full hover:bg-slate-100 transition-colors" title="Edytuj">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                                </a>
+                                <button class="delete-user-btn text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-100 transition-colors" title="Usuń" data-id="${user.id}" data-name="${user.firstName} ${user.lastName}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 pointer-events-none"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                // Ponowne dodanie listenerów do przycisków usuwania
+                addDeleteListeners();
+            }
+            
+            // --- Obsługa modali ---
+            const userModal = document.getElementById('userModal');
+            const userModalContent = document.getElementById('userModalContent');
+            const userForm = document.getElementById('userForm');
+            const deleteModal = document.getElementById('deleteConfirmationModal');
+            const deleteModalContent = deleteModal.querySelector('.modal-content');
+            const confirmationModal = document.getElementById('confirmationModal');
+            const confirmationModalContent = confirmationModal.querySelector('.modal-content');
+            let isFormDirty = false;
+            let targetUrl = null;
+            let userIdToDelete = null;
+
+            function openModal(modal, content) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => {
+                    content.classList.add('scale-100', 'opacity-100');
+                    content.classList.remove('scale-95', 'opacity-0');
+                }, 10);
+            }
+            
+            function closeModal(modal, content) {
+                content.classList.add('scale-95', 'opacity-0');
+                content.classList.remove('scale-100', 'opacity-100');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                }, 200);
+            }
+
+            // Otwieranie modala dodawania użytkownika
+            document.getElementById('addUserBtn').addEventListener('click', () => {
+                userForm.reset();
+                isFormDirty = false;
+                document.getElementById('modalTitle').textContent = 'Dodaj nowego użytkownika';
+                openModal(userModal, userModalContent);
+            });
+            
+            // Zamykanie modala dodawania użytkownika
+            document.getElementById('closeUserModal').addEventListener('click', () => closeModal(userModal, userModalContent));
+            document.getElementById('cancelUserModal').addEventListener('click', (e) => {
+                 if (isFormDirty) {
+                     e.preventDefault(); // Zatrzymaj domyślne zamknięcie
+                     targetUrl = '#'; // Specjalny znak oznaczający tylko zamknięcie modala
+                     openModal(confirmationModal, confirmationModalContent);
+                 } else {
+                     closeModal(userModal, userModalContent);
+                 }
+            });
+            userModal.addEventListener('click', e => e.target === userModal && closeModal(userModal, userModalContent));
+            
+            // Ostrzeżenie o niezapisanych zmianach
+            userForm.querySelectorAll('.form-input').forEach(input => {
+                input.addEventListener('input', () => { isFormDirty = true; });
+            });
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                 link.addEventListener('click', (e) => {
+                     const insideModal = e.target.closest('#userModal');
+                     if (isFormDirty && insideModal) {
+                         e.preventDefault();
+                         targetUrl = e.currentTarget.href; // Zapisz docelowy URL
+                         openModal(confirmationModal, confirmationModalContent);
+                     }
+                 });
+            });
+            
+            document.getElementById('stayBtn').addEventListener('click', () => closeModal(confirmationModal, confirmationModalContent));
+            document.getElementById('leaveBtn').addEventListener('click', () => {
+                isFormDirty = false;
+                if (targetUrl && targetUrl !== '#') {
+                    window.location.href = targetUrl; // Przejdź do strony
+                } else {
+                    closeModal(confirmationModal, confirmationModalContent); // Zamknij ostrzeżenie
+                    closeModal(userModal, userModalContent); // Zamknij modal formularza
+                }
+            });
+            
+            // Dodawanie użytkownika (symulacja)
+            userForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                // Tu logika dodawania
+                isFormDirty = false;
+                closeModal(userModal, userModalContent);
+                // Idealnie byłoby dodać nowego użytkownika do tablicy `users` i przerysować tabelę
+            });
+
+            // Usuwanie użytkownika
+            function addDeleteListeners() {
+                document.querySelectorAll('.delete-user-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        userIdToDelete = parseInt(e.currentTarget.dataset.id);
+                        document.getElementById('userNameToDelete').textContent = e.currentTarget.dataset.name;
+                        openModal(deleteModal, deleteModalContent);
+                    });
+                });
+            }
+            
+            document.getElementById('cancelDeleteBtn').addEventListener('click', () => closeModal(deleteModal, deleteModalContent));
+            document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
+                if(userIdToDelete) {
+                    users = users.filter(u => u.id !== userIdToDelete);
+                    renderTable(); // Przerenderuj tabelę po usunięciu
+                }
+                closeModal(deleteModal, deleteModalContent);
+                userIdToDelete = null;
+            });
+            deleteModal.addEventListener('click', e => e.target === deleteModal && closeModal(deleteModal, deleteModalContent));
+
+            // Inicjalizacja
+            generatePermissionsRows();
+            renderTable();
+        });
+    </script>
+</body>
+</html>
+

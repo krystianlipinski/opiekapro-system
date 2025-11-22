@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zarządzanie Magazynem - OpiekaPRO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+    <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        <aside class="w-64 flex-shrink-0 bg-slate-900 text-white flex flex-col">
+            <div class="h-16 flex items-center justify-center text-2xl font-bold border-b border-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-400 mr-2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>OpiekaPRO</span>
+            </div>
+            <nav id="sidebarNav" class="flex-1 px-4 py-6 space-y-2">
+                <a href="pacjenci.html" class="nav-link flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Pacjenci
+                </a>
+                <a href="zadania.html" class="nav-link flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M21.2 15c.7-1.2 1-2.5.7-3.9-.6-2.4-3.4-4-6.2-3.3-1.3.3-2.4 1-3.2 2.1-.8-1.1-1.9-1.8-3.2-2.1-2.8-.7-5.6.9-6.2 3.3-.3 1.4 0 2.7.7 3.9l10 10Z"/></svg>
+                    Zadania
+                </a>
+                <a href="uprawnienia.html" class="nav-link flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    Uprawnienia
+                </a>
+                <a href="magazyn.html" class="nav-link flex items-center px-4 py-2.5 bg-blue-600 text-white rounded-lg font-semibold shadow-md">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                    Magazyn
+                </a>
+				<a href="raporty.html" class="nav-link flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>
+                    Raporty
+                </a>
+                <a href="uzytkownicy.html" class="nav-link flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M18 9a4 4 0 0 0-7.44 2.13"/><path d="M18 9a4 4 0 0 0-7.44 2.13"/><path d="M14 12a4 4 0 1 0-8 0c0 1.4.67 2.67 1.68 3.51L10 17.5V22h4v-4.5l2.32-1.99A3.95 3.95 0 0 0 14 12Z"/><path d="M6 9a4 4 0 0 1 7.4-2.32"/><path d="M6 9a4 4 0 0 1 7.4-2.32"/></svg>
+                    Użytkownicy
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-white shadow-sm h-16 flex items-center justify-between px-6">
+                <div>
+                    <h1 class="text-lg font-semibold text-slate-600">Dom Opieki "Słoneczna Przystań"</h1>
+                </div>
+                <div class="flex items-center">
+                    <span class="mr-4 text-slate-700">Witaj, <span class="font-bold">Piotr Ćwikliński</span></span>
+                    <a href="login.html" class="nav-link flex items-center text-red-500 hover:text-red-700 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mr-2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                        Wyloguj się
+                    </a>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-100 p-6">
+                <div class="container mx-auto">
+                    <div class="mb-6">
+                         <h2 class="text-3xl font-bold text-slate-800">Zarządzanie Magazynem</h2>
+                         <p class="text-slate-500 mt-1">Ewidencja leków, środków higieny, opatrunków i innych przedmiotów.</p>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+                         <div class="w-full sm:w-auto flex-1">
+                            <input type="text" id="searchInput" placeholder="Szukaj przedmiotu (min. 3 litery)..." class="w-full max-w-xs px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition">
+                         </div>
+                        <div class="flex gap-2 w-full sm:w-auto">
+                            <button id="filterBtn" class="flex items-center bg-white text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-50 transition-colors shadow-sm border border-slate-300 w-full sm:w-auto justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mr-2"><polygon points="22 3 2 3 10 12.46V19l4 2v-8.54L22 3z"></polygon></svg>
+                                Filtry
+                            </button>
+                           <button id="scanBarcodeBtn" class="flex items-center bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition-colors shadow-sm w-full sm:w-auto justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mr-2"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg>
+                                Skanuj kod
+                            </button>
+                            <button id="addItemBtn" class="flex items-center bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors shadow-sm w-full sm:w-auto justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mr-2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                Dodaj przedmiot
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Warehouse Table -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-slate-200">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead class="bg-slate-50">
+                                    <tr>
+                                        <th class="p-4 font-semibold text-slate-600">Przedmiot</th>
+                                        <th class="p-4 font-semibold text-slate-600">Kategoria</th>
+                                        <th class="p-4 font-semibold text-slate-600">Ilość</th>
+                                        <th class="p-4 font-semibold text-slate-600">Właściciel</th>
+                                        <th class="p-4 font-semibold text-slate-600">Data dodania</th>
+                                        <th class="p-4 font-semibold text-slate-600 text-right">Akcje</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="warehouse-table-body" class="divide-y divide-slate-200">
+                                    <!-- Dane magazynu zostaną wstawione tutaj przez JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Pagination Controls -->
+                        <div id="pagination-controls" class="flex items-center justify-between mt-0 bg-white p-3 rounded-b-xl border-t border-slate-200">
+                            <div class="flex items-center gap-2">
+                                <label for="itemsPerPage" class="text-sm text-slate-600">Elementów na stronie:</label>
+                                <select id="itemsPerPage" class="border-slate-300 rounded-md text-sm p-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="10">10</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+                            <div id="pagination-info" class="text-sm text-slate-600 font-medium"></div>
+                            <div class="flex items-center gap-1">
+                                <button id="firstPageBtn" class="p-2 rounded-md hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed text-slate-500 disabled:text-slate-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg>
+                                </button>
+                                <button id="prevPageBtn" class="p-2 rounded-md hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed text-slate-500 disabled:text-slate-300">
+                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                                </button>
+                                <button id="nextPageBtn" class="p-2 rounded-md hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed text-slate-500 disabled:text-slate-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                                </button>
+                                <button id="lastPageBtn" class="p-2 rounded-md hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed text-slate-500 disabled:text-slate-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Add/Edit Item Modal -->
+    <div id="itemModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
+        <div id="itemModalContent" class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-lg transform transition-all opacity-0 scale-95">
+            <form id="itemForm" class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="modalTitle" class="text-xl font-bold text-slate-800">Dodaj nowy przedmiot</h3>
+                    <button type="button" id="closeItemModal" class="text-slate-400 hover:text-slate-800 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+                <div class="space-y-4">
+                     <input type="hidden" id="editItemId"> <!-- Hidden field for tracking edits -->
+                    <div>
+                        <label for="itemName" class="block text-sm font-medium text-slate-700">Nazwa przedmiotu</label>
+                        <input type="text" id="itemName" name="itemName" required class="form-input mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="itemCategory" class="block text-sm font-medium text-slate-700">Kategoria</label>
+                        <select id="itemCategory" name="itemCategory" class="form-input mt-1 block w-full px-3 py-2 border border-slate-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <option>Leki</option>
+                            <option>Środki higieny</option>
+                            <option>Opatrunki</option>
+                            <option>Inne</option>
+                        </select>
+                    </div>
+                     <div>
+                        <label for="itemQuantity" class="block text-sm font-medium text-slate-700">Ilość</label>
+                        <input type="number" id="itemQuantity" name="itemQuantity" required min="1" class="form-input mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700">Właściciel</label>
+                        <div class="mt-2 flex gap-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="owner" value="Dom Opieki" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-slate-300 form-input" checked>
+                                <span class="ml-2 text-slate-800">Dom Opieki</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="owner" value="Pacjent" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-slate-300 form-input">
+                                <span class="ml-2 text-slate-800">Pacjent</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div id="patientSelectorContainer" class="hidden">
+                        <label for="patientSelector" class="block text-sm font-medium text-slate-700">Wybierz pacjenta</label>
+                        <select id="patientSelector" name="patientSelector" class="form-input mt-1 block w-full px-3 py-2 border border-slate-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <!-- Options will be populated by JS -->
+                        </select>
+                    </div>
+                </div>
+                 <div class="mt-6 flex justify-end gap-3">
+                    <button type="button" id="cancelItemModal" class="nav-link bg-white py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Anuluj</button>
+                    <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Zapisz</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+     <!-- Delete Confirmation Modal -->
+    <div id="deleteConfirmationModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-md transform transition-all opacity-0 scale-95">
+             <div class="p-6 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-red-500 mx-auto mb-4"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <h3 class="text-xl font-bold text-slate-800">Potwierdź usunięcie</h3>
+                <p class="text-slate-500 mt-2">Czy na pewno chcesz usunąć przedmiot: <strong id="itemNameToDelete" class="font-medium"></strong>?</p>
+            </div>
+            <div class="bg-slate-50 px-6 py-4 flex justify-end gap-3 rounded-b-xl">
+                <button type="button" id="cancelDeleteBtn" class="bg-white py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50">Anuluj</button>
+                <button type="button" id="confirmDeleteBtn" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700">Usuń</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Unsaved Changes Modal -->
+    <div id="confirmationModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-md transform transition-all opacity-0 scale-95">
+             <div class="p-6 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-yellow-500 mx-auto mb-4"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <h3 class="text-xl font-bold text-slate-800">Niezapisane zmiany</h3>
+                <p class="text-slate-500 mt-2">Masz niezapisane zmiany w formularzu. Czy na pewno chcesz go opuścić?</p>
+            </div>
+            <div class="bg-slate-50 px-6 py-4 flex justify-end gap-3 rounded-b-xl">
+                <button type="button" id="stayBtn" class="bg-white py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50">Zostań</button>
+                <button type="button" id="leaveBtn" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700">Opuść</button>
+            </div>
+        </div>
+    </div>
+    
+     <!-- Barcode Scanner Modal -->
+    <div id="scanModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
+        <div id="scanModalContent" class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-md transform transition-all opacity-0 scale-95">
+            <div class="p-6">
+                 <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-slate-800 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-2 text-teal-500"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg>
+                        Skaner Kodów Kreskowych
+                    </h3>
+                    <button type="button" id="closeScanModal" class="text-slate-400 hover:text-slate-800 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+                <div class="bg-slate-900 aspect-video rounded-lg flex items-center justify-center mb-4">
+                    <p class="text-slate-400">Podgląd kamery...</p>
+                </div>
+                 <div>
+                    <label for="barcodeInput" class="block text-sm font-medium text-slate-700">Lub wprowadź kod ręcznie</label>
+                    <input type="text" id="barcodeInput" name="barcodeInput" class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500" placeholder="np. 5900049010150">
+                </div>
+                 <div class="mt-6 flex justify-end">
+                    <button type="button" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">Wyszukaj i dodaj</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+     <!-- Filter Modal -->
+    <div id="filterModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-md transform transition-all opacity-0 scale-95" id="filter-modal-content">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-slate-800">Filtry zaawansowane</h3>
+                    <button id="closeFilterModal" class="text-slate-400 hover:text-slate-800 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+                <form id="filterForm" class="space-y-4">
+                    <div>
+                        <label for="filterCategory" class="block text-sm font-medium text-slate-700">Kategoria</label>
+                        <select id="filterCategory" class="mt-1 block w-full px-3 py-2 border border-slate-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                             <option value="all">Wszystkie</option>
+                             <option>Leki</option>
+                             <option>Środki higieny</option>
+                             <option>Opatrunki</option>
+                             <option>Inne</option>
+                        </select>
+                    </div>
+                     <div>
+                        <label for="filterOwner" class="block text-sm font-medium text-slate-700">Właściciel</label>
+                        <select id="filterOwner" class="mt-1 block w-full px-3 py-2 border border-slate-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                             <option value="all">Wszyscy</option>
+                             <option value="Dom Opieki">Dom Opieki</option>
+                             <option value="Pacjent">Pacjent</option>
+                        </select>
+                    </div>
+                    <div id="filterOwnerNameContainer" class="hidden">
+                        <label for="filterOwnerName" class="block text-sm font-medium text-slate-700">Imię i nazwisko pacjenta</label>
+                        <input type="text" id="filterOwnerName" class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Wpisz imię lub nazwisko...">
+                    </div>
+                    <div class="flex justify-end gap-3 pt-4 border-t">
+                        <button type="button" id="clearFilters" class="bg-white py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50">Wyczyść</button>
+                        <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">Zastosuj filtry</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DATA ---
+            const firstNames = ['Jan', 'Anna', 'Piotr', 'Krystyna', 'Andrzej', 'Barbara', 'Tomasz', 'Zofia', 'Marek', 'Ewa'];
+            const lastNames = ['Kowalski', 'Nowak', 'Zieliński', 'Wiśniewska', 'Szymański', 'Wójcik', 'Lewandowski', 'Dąbrowska', 'Kamiński', 'Jankowska'];
+            const categories = ['Leki', 'Środki higieny', 'Opatrunki', 'Inne'];
+            const itemNames = ['Paracetamol', 'Chusteczki nawilżane', 'Gaza jałowa', 'Sweter', 'Insulina', 'Pieluchomajtki', 'Plaster', 'Książka', 'Okulary', 'Ciśnieniomierz'];
+
+            let allItems = [];
+            for (let i = 1; i <= 500; i++) {
+                const category = categories[Math.floor(Math.random() * categories.length)];
+                const ownerType = Math.random() > 0.3 ? 'Dom Opieki' : 'Pacjent';
+                const owner = ownerType === 'Pacjent' ? 
+                              `${firstNames[Math.floor(Math.random() * firstNames.length)]} ${lastNames[Math.floor(Math.random() * lastNames.length)]}` :
+                              'Dom Opieki';
+                
+                allItems.push({
+                    id: i,
+                    name: `${itemNames[Math.floor(Math.random() * itemNames.length)]} ${category === 'Leki' ? (Math.floor(Math.random()*10)*50)+'mg' : ''}`,
+                    category: category,
+                    quantity: Math.floor(Math.random() * 100) + 1,
+                    owner: owner,
+                    ownerType: ownerType, // Helper property
+                    added: `2025-10-${String(Math.floor(Math.random() * 20) + 1).padStart(2, '0')}`
+                });
+            }
+
+            const patients = [...new Set(allItems.filter(i => i.ownerType === 'Pacjent').map(i => i.owner))];
+
+            // --- STATE ---
+            let filters = { name: '', category: 'all', owner: 'all', ownerName: '' };
+            let currentPage = 1;
+            let itemsPerPage = 10;
+            let isFormDirty = false;
+            let targetUrl = null;
+            let itemToDeleteId = null;
+
+            // --- ELEMENTS ---
+            const tableBody = document.getElementById('warehouse-table-body');
+            const searchInput = document.getElementById('searchInput');
+            
+            const itemModal = document.getElementById('itemModal');
+            const itemModalContent = document.getElementById('itemModalContent');
+            const itemForm = document.getElementById('itemForm');
+            const modalTitle = document.getElementById('modalTitle');
+            const editItemIdInput = document.getElementById('editItemId');
+            const addItemBtn = document.getElementById('addItemBtn');
+            const closeItemModalBtn = document.getElementById('closeItemModal');
+            const cancelItemModalBtn = document.getElementById('cancelItemModal');
+            
+            const patientSelectorContainer = document.getElementById('patientSelectorContainer');
+            const patientSelector = document.getElementById('patientSelector');
+
+            const scanModal = document.getElementById('scanModal');
+            const scanModalContent = document.getElementById('scanModalContent');
+            const scanBarcodeBtn = document.getElementById('scanBarcodeBtn');
+            const closeScanModalBtn = document.getElementById('closeScanModal');
+
+            const filterModal = document.getElementById('filterModal');
+            const filterModalContent = filterModal.querySelector('.modal-content');
+            const filterBtn = document.getElementById('filterBtn');
+            const closeFilterModal = document.getElementById('closeFilterModal');
+            const filterOwnerSelect = document.getElementById('filterOwner');
+            const filterOwnerNameContainer = document.getElementById('filterOwnerNameContainer');
+            const filterOwnerNameInput = document.getElementById('filterOwnerName');
+
+            const deleteModal = document.getElementById('deleteConfirmationModal');
+            const deleteModalContent = deleteModal.querySelector('.modal-content');
+            const itemNameToDeleteSpan = document.getElementById('itemNameToDelete');
+            const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+            const confirmationModal = document.getElementById('confirmationModal');
+            const confirmationModalContent = confirmationModal.querySelector('.modal-content');
+            const stayBtn = document.getElementById('stayBtn');
+            const leaveBtn = document.getElementById('leaveBtn');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            const itemsPerPageSelect = document.getElementById('itemsPerPage');
+            const paginationInfo = document.getElementById('pagination-info');
+            const firstPageBtn = document.getElementById('firstPageBtn');
+            const prevPageBtn = document.getElementById('prevPageBtn');
+            const nextPageBtn = document.getElementById('nextPageBtn');
+            const lastPageBtn = document.getElementById('lastPageBtn');
+
+            // --- FUNCTIONS ---
+            function openModal(modal, content) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => { if (content) { content.classList.add('scale-100', 'opacity-100'); content.classList.remove('scale-95', 'opacity-0');} }, 10);
+            }
+
+            function closeModal(modal, content) {
+                 if (content) { content.classList.add('scale-95', 'opacity-0'); content.classList.remove('scale-100', 'opacity-100');}
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                }, 200);
+            }
+            
+            function renderTable() {
+                // 1. Filter
+                const filteredItems = allItems.filter(p => {
+                    const nameMatch = filters.name.length < 3 || p.name.toLowerCase().includes(filters.name.toLowerCase());
+                    const categoryMatch = filters.category === 'all' || p.category === filters.category;
+                    
+                    let ownerMatch = false;
+                    if (filters.owner === 'all') {
+                        ownerMatch = true;
+                    } else if (filters.owner === 'Dom Opieki') {
+                        ownerMatch = p.ownerType === 'Dom Opieki';
+                    } else if (filters.owner === 'Pacjent') {
+                        ownerMatch = p.ownerType === 'Pacjent' && p.owner.toLowerCase().includes(filters.ownerName.toLowerCase());
+                    }
+
+                    return nameMatch && categoryMatch && ownerMatch;
+                });
+
+                // 2. Paginate
+                const totalItems = filteredItems.length;
+                const totalPages = Math.ceil(totalItems / itemsPerPage);
+                if (currentPage > totalPages) currentPage = totalPages || 1;
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const paginatedItems = filteredItems.slice(startIndex, startIndex + itemsPerPage);
+
+                // 3. Render Table
+                tableBody.innerHTML = '';
+                const ownerClasses = { 'Dom Opieki': 'bg-blue-100 text-blue-800', 'Pacjent': 'bg-green-100 text-green-800' };
+
+                if (paginatedItems.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="6" class="text-center p-6 text-slate-500">Nie znaleziono przedmiotów spełniających kryteria.</td></tr>';
+                } else {
+                    paginatedItems.forEach(item => {
+                        const ownerClass = item.ownerType === 'Pacjent' ? ownerClasses['Pacjent'] : ownerClasses['Dom Opieki'];
+                        tableBody.innerHTML += `
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-4 font-semibold text-slate-800">${item.name}</td>
+                                <td class="p-4 text-slate-600">${item.category}</td>
+                                <td class="p-4 text-slate-600">${item.quantity} szt.</td>
+                                <td class="p-4">
+                                    <span class="px-2 py-1 text-xs font-semibold rounded-full ${ownerClass}">${item.owner}</span>
+                                </td>
+                                <td class="p-4 text-slate-500">${item.added}</td>
+                                <td class="p-4 text-right">
+                                    <button class="edit-item-btn text-slate-400 hover:text-blue-600 p-2 rounded-full hover:bg-slate-100 transition-colors" title="Edytuj" data-id="${item.id}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 pointer-events-none"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                                    </button>
+                                    <button class="delete-item-btn text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-100 transition-colors" title="Usuń" data-id="${item.id}" data-name="${item.name}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 pointer-events-none"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                }
+                
+                // 4. Update Pagination
+                const startItem = totalItems > 0 ? startIndex + 1 : 0;
+                const endItem = Math.min(startIndex + itemsPerPage, totalItems);
+                paginationInfo.textContent = `${startItem} - ${endItem} z ${totalItems}`;
+                firstPageBtn.disabled = currentPage === 1;
+                prevPageBtn.disabled = currentPage === 1;
+                nextPageBtn.disabled = currentPage >= totalPages;
+                lastPageBtn.disabled = currentPage >= totalPages;
+                
+                // Re-attach listeners after render
+                addTableActionListeners();
+            }
+
+            function addTableActionListeners() {
+                // Usuń stare listenery, aby uniknąć duplikatów
+                tableBody.querySelectorAll('.edit-item-btn').forEach(button => button.replaceWith(button.cloneNode(true)));
+                tableBody.querySelectorAll('.delete-item-btn').forEach(button => button.replaceWith(button.cloneNode(true)));
+                
+                // Dodaj nowe listenery
+                tableBody.querySelectorAll('.edit-item-btn').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const id = parseInt(e.currentTarget.dataset.id);
+                        const item = allItems.find(i => i.id === id);
+                        if (item) {
+                            modalTitle.textContent = 'Edytuj przedmiot';
+                            editItemIdInput.value = item.id;
+                            document.getElementById('itemName').value = item.name;
+                            document.getElementById('itemCategory').value = item.category;
+                            document.getElementById('itemQuantity').value = item.quantity;
+                            
+                            if (item.ownerType === 'Pacjent') {
+                                document.querySelector('input[name="owner"][value="Pacjent"]').checked = true;
+                                patientSelectorContainer.classList.remove('hidden');
+                                patientSelector.value = item.owner;
+                            } else {
+                                document.querySelector('input[name="owner"][value="Dom Opieki"]').checked = true;
+                                patientSelectorContainer.classList.add('hidden');
+                            }
+                            isFormDirty = false;
+                            openModal(itemModal, itemModalContent);
+                        }
+                    });
+                });
+
+                tableBody.querySelectorAll('.delete-item-btn').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.stopPropagation(); // Prevent row click if any
+                        itemToDeleteId = parseInt(e.currentTarget.dataset.id);
+                        itemNameToDeleteSpan.textContent = e.currentTarget.dataset.name;
+                        openModal(deleteModal, deleteModalContent);
+                    });
+                });
+            }
+
+            // --- EVENT LISTENERS ---
+
+            // Search
+            searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.trim();
+                if (searchTerm.length >= 3 || searchTerm.length === 0) {
+                     filters.name = searchTerm;
+                     currentPage = 1;
+                     renderTable();
+                }
+            });
+
+            // Modals: Add Item
+            addItemBtn.addEventListener('click', () => {
+                modalTitle.textContent = 'Dodaj nowy przedmiot';
+                itemForm.reset();
+                editItemIdInput.value = '';
+                document.querySelector('input[name="owner"][value="Dom Opieki"]').checked = true;
+                patientSelectorContainer.classList.add('hidden');
+                isFormDirty = false;
+                openModal(itemModal, itemModalContent);
+            });
+            closeItemModalBtn.addEventListener('click', () => closeModal(itemModal, itemModalContent));
+            cancelItemModalBtn.addEventListener('click', () => {
+                 if (isFormDirty) {
+                     openWarningModal('#'); // '#' signifies just closing the modal
+                 } else {
+                     closeModal(itemModal, itemModalContent);
+                 }
+            });
+            itemModal.addEventListener('click', e => { if (e.target === itemModal) closeModal(itemModal, itemModalContent); });
+
+            // Modals: Scan
+            scanBarcodeBtn.addEventListener('click', () => openModal(scanModal, scanModalContent));
+            closeScanModalBtn.addEventListener('click', () => closeModal(scanModal, scanModalContent));
+            scanModal.addEventListener('click', e => e.target === scanModal && closeModal(scanModal, scanModalContent));
+            
+            // Modals: Filter
+            filterBtn.addEventListener('click', () => openModal(filterModal, filterModalContent));
+            closeFilterModal.addEventListener('click', () => closeModal(filterModal, filterModalContent));
+            filterModal.addEventListener('click', e => e.target === filterModal && closeModal(filterModal, filterModalContent));
+            
+            // NOWY: Show/Hide filter patient name input
+            filterOwnerSelect.addEventListener('change', (e) => {
+                if (e.target.value === 'Pacjent') {
+                    filterOwnerNameContainer.classList.remove('hidden');
+                } else {
+                    filterOwnerNameContainer.classList.add('hidden');
+                    filterOwnerNameInput.value = ''; // Clear input if not filtering by patient
+                }
+            });
+
+            document.getElementById('filterForm').addEventListener('submit', e => {
+                e.preventDefault();
+                filters.category = document.getElementById('filterCategory').value;
+                filters.owner = document.getElementById('filterOwner').value;
+                filters.ownerName = document.getElementById('filterOwnerName').value; // Pobierz wartość
+                currentPage = 1;
+                renderTable();
+                closeModal(filterModal, filterModalContent);
+            });
+            document.getElementById('clearFilters').addEventListener('click', () => {
+                document.getElementById('filterForm').reset();
+                filters.category = 'all';
+                filters.owner = 'all';
+                filters.ownerName = ''; // Zresetuj
+                filterOwnerNameContainer.classList.add('hidden'); // Ukryj pole
+                currentPage = 1;
+                renderTable();
+            });
+
+            // Modals: Delete Confirmation
+            cancelDeleteBtn.addEventListener('click', () => closeModal(deleteModal, deleteModalContent));
+            deleteModal.addEventListener('click', e => e.target === deleteModal && closeModal(deleteModal, deleteModalContent));
+            confirmDeleteBtn.addEventListener('click', () => {
+                if (itemToDeleteId !== null) {
+                    allItems = allItems.filter(item => item.id !== itemToDeleteId);
+                    // Adjust current page if needed
+                    const filteredTotal = allItems.filter(p => {
+                        const nameMatch = filters.name.length < 3 || p.name.toLowerCase().includes(filters.name.toLowerCase());
+                        const categoryMatch = filters.category === 'all' || p.category === filters.category;
+                        let ownerMatch = false;
+                        if (filters.owner === 'all') ownerMatch = true;
+                        else if (filters.owner === 'Dom Opieki') ownerMatch = p.ownerType === 'Dom Opieki';
+                        else if (filters.owner === 'Pacjent') ownerMatch = p.ownerType === 'Pacjent' && p.owner.toLowerCase().includes(filters.ownerName.toLowerCase());
+                        return nameMatch && categoryMatch && ownerMatch;
+                    }).length;
+                    
+                    const totalPages = Math.ceil(filteredTotal / itemsPerPage);
+                    if(currentPage > totalPages) currentPage = totalPages || 1;
+                    renderTable();
+                }
+                closeModal(deleteModal, deleteModalContent);
+                itemToDeleteId = null;
+            });
+
+            // Form Logic
+            itemForm.querySelectorAll('input, select').forEach(input => {
+                input.addEventListener('input', () => { isFormDirty = true; });
+            });
+            
+            document.querySelectorAll('input[name="owner"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    if (e.target.value === 'Pacjent') {
+                        patientSelectorContainer.classList.remove('hidden');
+                    } else {
+                        patientSelectorContainer.classList.add('hidden');
+                    }
+                    isFormDirty = true;
+                });
+            });
+
+            itemForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const id = parseInt(editItemIdInput.value);
+                const name = document.getElementById('itemName').value;
+                const category = document.getElementById('itemCategory').value;
+                const quantity = parseInt(document.getElementById('itemQuantity').value);
+                const ownerType = document.querySelector('input[name="owner"]:checked').value;
+                const owner = ownerType === 'Pacjent' ? document.getElementById('patientSelector').value : 'Dom Opieki';
+
+                if (id) { // Edit
+                    const index = allItems.findIndex(i => i.id === id);
+                    if (index !== -1) {
+                        allItems[index] = { ...allItems[index], name, category, quantity, owner, ownerType };
+                    }
+                } else { // Add
+                    const newItem = {
+                        id: Date.now(), name, category, quantity, owner, ownerType,
+                        added: new Date().toISOString().split('T')[0]
+                    };
+                    allItems.unshift(newItem); // Add to top
+                }
+                renderTable();
+                isFormDirty = false;
+                closeModal(itemModal, itemModalContent);
+            });
+
+            // Unsaved Changes Modal Logic
+            function openWarningModal(url) {
+                targetUrl = url;
+                openModal(confirmationModal, confirmationModalContent);
+            }
+            function closeWarningModal() {
+                closeModal(confirmationModal, confirmationModalContent);
+                targetUrl = null;
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const insideItemModal = e.target.closest('#itemModal');
+                    const isCancelInModal = e.target.id === 'cancelItemModal';
+                    
+                    if (isFormDirty && (isCancelInModal || !insideItemModal)) {
+                        e.preventDefault();
+                        let href = isCancelInModal ? '#' : link.href;
+                        openWarningModal(href);
+                    }
+                });
+            });
+
+            stayBtn.addEventListener('click', closeWarningModal);
+            leaveBtn.addEventListener('click', () => {
+                isFormDirty = false;
+                if (targetUrl && targetUrl !== '#') {
+                    window.location.href = targetUrl;
+                } else {
+                    closeWarningModal();
+                    closeModal(itemModal, itemModalContent);
+                }
+            });
+            confirmationModal.addEventListener('click', e => { if (e.target === confirmationModal) closeWarningModal(); });
+
+            // Pagination Listeners
+            itemsPerPageSelect.addEventListener('change', (e) => {
+                 itemsPerPage = parseInt(e.target.value, 10);
+                 currentPage = 1;
+                 renderTable();
+             });
+             firstPageBtn.addEventListener('click', () => { currentPage = 1; renderTable(); });
+             prevPageBtn.addEventListener('click', () => { if (currentPage > 1) currentPage--; renderTable(); });
+             nextPageBtn.addEventListener('click', () => {
+                 const totalPages = Math.ceil(allItems.filter(p => (filters.name.length < 3 || p.name.toLowerCase().includes(filters.name.toLowerCase())) && (filters.category === 'all' || p.category === filters.category) && (filters.owner === 'all' || (filters.owner === 'Dom Opieki' && p.ownerType === 'Dom Opieki') || (filters.owner === 'Pacjent' && p.ownerType === 'Pacjent' && p.owner.toLowerCase().includes(filters.ownerName.toLowerCase()))) ).length / itemsPerPage);
+                 if (currentPage < totalPages) currentPage++;
+                 renderTable();
+             });
+             lastPageBtn.addEventListener('click', () => {
+                 const totalPages = Math.ceil(allItems.filter(p => (filters.name.length < 3 || p.name.toLowerCase().includes(filters.name.toLowerCase())) && (filters.category === 'all' || p.category === filters.category) && (filters.owner === 'all' || (filters.owner === 'Dom Opieki' && p.ownerType === 'Dom Opieki') || (filters.owner === 'Pacjent' && p.ownerType === 'Pacjent' && p.owner.toLowerCase().includes(filters.ownerName.toLowerCase()))) ).length / itemsPerPage);
+                 currentPage = totalPages || 1;
+                 renderTable();
+             });
+
+            // Initial Populate & Render
+            patients.forEach(p => {
+                const option = document.createElement('option');
+                option.value = p;
+                option.textContent = p;
+                patientSelector.appendChild(option);
+            });
+            renderTable();
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Szczegóły Użytkownika - OpiekaPRO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+         /* Custom checkbox styles */
+        .permission-checkbox:checked {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+        .permission-checkbox:checked::before {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            width: 100%;
+            height: 100%;
+        }
+        .permission-checkbox {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid #cbd5e1;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            vertical-align: middle;
+            transition: all 0.2s ease-in-out;
+        }
+        .permission-checkbox:disabled {
+            background-color: #e2e8f0;
+            border-color: #cbd5e1;
+            cursor: not-allowed;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+    <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        <aside class="w-64 flex-shrink-0 bg-slate-900 text-white flex flex-col">
+            <div class="h-16 flex items-center justify-center text-2xl font-bold border-b border-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-400 mr-2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>OpiekaPRO</span>
+            </div>
+            <nav class="flex-1 px-4 py-6 space-y-2">
+                 <a href="pacjenci.html" class="flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Pacjenci
+                </a>
+                <a href="zadania.html" class="flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M21.2 15c.7-1.2 1-2.5.7-3.9-.6-2.4-3.4-4-6.2-3.3-1.3.3-2.4 1-3.2 2.1-.8-1.1-1.9-1.8-3.2-2.1-2.8-.7-5.6.9-6.2 3.3-.3 1.4 0 2.7.7 3.9l10 10Z"/></svg>
+                    Zadania
+                </a>
+                 <a href="uprawnienia.html" class="flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    Uprawnienia
+                </a>
+                <a href="magazyn.html" class="flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                    Magazyn
+                </a>
+				<a href="raporty.html" class="nav-link flex items-center px-4 py-2.5 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>
+                    Raporty
+                </a>
+                <a href="uzytkownicy.html" class="flex items-center px-4 py-2.5 bg-blue-600 text-white rounded-lg font-semibold shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M18 9a4 4 0 0 0-7.44 2.13"/><path d="M18 9a4 4 0 0 0-7.44 2.13"/><path d="M14 12a4 4 0 1 0-8 0c0 1.4.67 2.67 1.68 3.51L10 17.5V22h4v-4.5l2.32-1.99A3.95 3.95 0 0 0 14 12Z"/><path d="M6 9a4 4 0 0 1 7.4-2.32"/><path d="M6 9a4 4 0 0 1 7.4-2.32"/></svg>
+                    Użytkownicy
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-white shadow-sm h-16 flex items-center justify-between px-6">
+                <div>
+                     <a href="uzytkownicy.html" class="text-sm text-blue-600 hover:underline">&larr; Powrót do listy użytkowników</a>
+                </div>
+                <div class="flex items-center">
+                    <span class="mr-4 text-slate-700">Witaj, <span class="font-bold">Piotr Ćwikliński</span></span>
+                    <a href="login.html" class="flex items-center text-red-500 hover:text-red-700 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 mr-2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                        Wyloguj się
+                    </a>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-100 p-6">
+                <div class="container mx-auto">
+                    <div class="mb-6">
+                         <h2 class="text-3xl font-bold text-slate-800">Szczegóły Użytkownika: Piotr Ćwikliński</h2>
+                         <p class="text-slate-500 mt-1">Zarządzaj danymi osobowymi i uprawnieniami.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- User Permissions -->
+                            <div class="bg-white rounded-xl shadow-lg border border-slate-200">
+                                <div class="p-6 border-b">
+                                    <h3 class="text-xl font-bold text-slate-800">Zarządzanie Uprawnieniami</h3>
+                                    <p class="text-slate-500 mt-1 text-sm">Przypisz rolę lub dostosuj uprawnienia manualnie.</p>
+                                </div>
+                                <div class="p-6 space-y-4">
+                                     <div>
+                                        <h4 class="font-semibold text-slate-700 mb-2">Zastosuj szablon roli</h4>
+                                        <div class="flex flex-wrap gap-2">
+                                            <button data-role="opiekun" class="role-btn bg-green-100 text-green-800 hover:bg-green-200 text-sm font-semibold px-3 py-1 rounded-full transition-colors">Opiekun</button>
+											<button data-role="lekarz" class="role-btn bg-yellow-100 text-yellow-800 hover:bg-yellow-200 text-sm font-semibold px-3 py-1 rounded-full transition-colors">Lekarz</button>
+                                            <button data-role="pielegniarz" class="role-btn bg-blue-100 text-blue-800 hover:bg-blue-200 text-sm font-semibold px-3 py-1 rounded-full transition-colors">Pielęgniarz</button>
+                                            <button data-role="admin" class="role-btn bg-purple-100 text-purple-800 hover:bg-purple-200 text-sm font-semibold px-3 py-1 rounded-full transition-colors">Administrator</button>
+                                            <button data-role="custom" class="role-btn bg-slate-100 text-slate-800 hover:bg-slate-200 text-sm font-semibold px-3 py-1 rounded-full transition-colors border border-slate-300">Niestandardowe</button>
+                                        </div>
+                                    </div>
+                                    <div class="pt-2">
+                                        <div class="grid grid-cols-6 gap-2 text-center font-semibold text-slate-600 text-sm py-2 border-b"> <!-- Zmieniono na 6 kolumn -->
+                                            <div class="text-left">Moduł</div>
+                                            <div>Odczyt</div>
+                                            <div>Edycja</div>
+                                            <div>Dodawanie</div>
+                                            <div>Usuwanie</div>
+                                            <div class="text-xs">PESEL<br>(Podgląd)</div> <!-- Dodano kolumnę PESEL -->
+                                        </div>
+                                        <div id="permissions-container" class="divide-y divide-slate-200">
+                                            <!-- Permissions rows will be generated by JS -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-6">
+                             <!-- User Profile -->
+                            <div class="bg-white rounded-xl shadow-lg border border-slate-200">
+                                <div class="p-6 border-b">
+                                    <h3 class="text-xl font-bold text-slate-800">Profil Użytkownika</h3>
+                                </div>
+                                <form class="p-6 space-y-4" action="uzytkownicy.html" method="GET"> <!-- Dodano action i method -->
+                                    <div>
+                                        <label for="firstName" class="block text-sm font-medium text-slate-700">Imię</label>
+                                        <input type="text" id="firstName" value="Piotr" class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label for="lastName" class="block text-sm font-medium text-slate-700">Nazwisko</label>
+                                        <input type="text" id="lastName" value="Ćwikliński" class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label for="email" class="block text-sm font-medium text-slate-700">Adres e-mail</label>
+                                        <input type="email" id="email" value="hunterpcool@wp.pl" class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label for="phone" class="block text-sm font-medium text-slate-700">Telefon</label>
+                                        <input type="tel" id="phone" value="500 708 989" class="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    <div class="pt-2 flex justify-end">
+                                        <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Zapisz zmiany</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Danger Zone -->
+                             <div class="bg-white rounded-xl shadow-lg border-2 border-red-200">
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold text-red-800">Strefa niebezpieczna</h3>
+                                     <p class="text-slate-500 mt-1 text-sm">Operacje poniżej są nieodwracalne.</p>
+                                     <div class="mt-4 flex flex-col sm:flex-row gap-3">
+                                        <button type="button" id="deactivateBtn" class="w-full text-center py-2 px-4 border border-yellow-400 text-yellow-700 bg-yellow-50 rounded-md hover:bg-yellow-100 font-semibold">Dezaktywuj konto</button>
+                                        <button type="button" id="deleteBtn" class="w-full text-center py-2 px-4 border border-red-400 text-red-700 bg-red-50 rounded-md hover:bg-red-100 font-semibold">Usuń użytkownika</button>
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Deactivate User Modal -->
+    <div id="deactivateUserModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-md transform transition-all opacity-0 scale-95">
+             <div class="p-6 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-yellow-500 mx-auto mb-4"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <h3 class="text-xl font-bold text-slate-800">Potwierdź dezaktywację</h3>
+                <p class="text-slate-500 mt-2">Czy na pewno chcesz dezaktywować konto użytkownika Piotr Ćwikliński?</p>
+            </div>
+            <div class="bg-slate-50 px-6 py-4 flex justify-end gap-3 rounded-b-xl">
+                <button type="button" id="cancelDeactivateBtn" class="bg-white py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50">Anuluj</button>
+                <button type="button" id="confirmDeactivateBtn" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700">Dezaktywuj</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Delete User Modal -->
+    <div id="deleteUserModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-md transform transition-all opacity-0 scale-95">
+             <div class="p-6 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-red-500 mx-auto mb-4"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <h3 class="text-xl font-bold text-slate-800">Potwierdź usunięcie</h3>
+                <p class="text-slate-500 mt-2">Czy na pewno chcesz trwale usunąć użytkownika Piotr Ćwikliński?</p>
+            </div>
+            <div class="bg-slate-50 px-6 py-4 flex justify-end gap-3 rounded-b-xl">
+                <button type="button" id="cancelDeleteBtn" class="bg-white py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50">Anuluj</button>
+                <button type="button" id="confirmDeleteBtn" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700">Usuń</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+             // --- Modal Helpers ---
+            function openModal(modal) {
+                const modalContent = modal.querySelector('.modal-content');
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => {
+                    if (modalContent) {
+                        modalContent.classList.add('scale-100', 'opacity-100');
+                        modalContent.classList.remove('scale-95', 'opacity-0');
+                    }
+                }, 10);
+            }
+
+            function closeModal(modal) {
+                const modalContent = modal.querySelector('.modal-content');
+                if (modalContent) {
+                    modalContent.classList.add('scale-95', 'opacity-0');
+                    modalContent.classList.remove('scale-100', 'opacity-100');
+                }
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                }, 200);
+            }
+            
+            // --- Permissions Logic ---
+            const modules = ['Pacjenci', 'Zadania', 'Magazyn', 'Użytkownicy', 'Uprawnienia'];
+            const permissionsContainer = document.getElementById('permissions-container');
+
+            // Definicje ról
+            const roles = {
+                lekarz: {
+                    pacjenci: ['read'],
+                    zadania: ['read', 'edit'],
+                    magazyn: ['read'],
+                    uzytkownicy: [],
+                    uprawnienia: []
+                },
+				opiekun: {
+                    pacjenci: ['read'],
+                    zadania: ['read', 'edit'],
+                    magazyn: ['read'],
+                    uzytkownicy: [],
+                    uprawnienia: []
+                },
+                pielegniarz: {
+                    pacjenci: ['read', 'edit', 'add', 'pesel'], // Dodano pesel
+                    zadania: ['read', 'edit', 'add', 'delete'],
+                    magazyn: ['read', 'edit', 'add'],
+                    uzytkownicy: [],
+                    uprawnienia: []
+                },
+                admin: {
+                    pacjenci: ['read', 'edit', 'add', 'delete', 'pesel'], // Dodano pesel
+                    zadania: ['read', 'edit', 'add', 'delete'],
+                    magazyn: ['read', 'edit', 'add', 'delete'],
+                    uzytkownicy: ['read', 'edit', 'add'],
+                    uprawnienia: ['read', 'edit'] // Dodano uprawnienia dla admina
+                },
+                 // Superuser miałby dostęp do wszystkiego
+            };
+
+            function generatePermissionsRows() {
+                if (!permissionsContainer) return; // Guard clause
+                permissionsContainer.innerHTML = '';
+                modules.forEach(module => {
+                    const modId = module.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-');
+                    const isPacjenci = module === 'Pacjenci';
+                    const row = `
+                    <div class="grid grid-cols-6 gap-2 items-center py-3"> <!-- Zmieniono na 6 -->
+                        <div class="font-medium text-slate-800">${module}</div>
+                        <div class="flex justify-center"><input type="checkbox" id="read-${modId}" name="read-${modId}" class="permission-checkbox"></div>
+                        <div class="flex justify-center"><input type="checkbox" id="edit-${modId}" name="edit-${modId}" class="permission-checkbox"></div>
+                        <div class="flex justify-center"><input type="checkbox" id="add-${modId}" name="add-${modId}" class="permission-checkbox"></div>
+                        <div class="flex justify-center"><input type="checkbox" id="delete-${modId}" name="delete-${modId}" class="permission-checkbox"></div>
+                        <div class="flex justify-center"> <!-- Dodano kolumnę -->
+                            ${isPacjenci ? `<input type="checkbox" id="pesel-${modId}" name="pesel-${modId}" class="permission-checkbox">` : `<span class="text-slate-300">-</span>`}
+                        </div>
+                    </div>
+                    `;
+                    permissionsContainer.innerHTML += row;
+                });
+            }
+            
+            function setPermissions(role) {
+                // Reset all checkboxes
+                document.querySelectorAll('.permission-checkbox').forEach(cb => cb.checked = false);
+
+                if (!roles[role]) return;
+
+                Object.keys(roles[role]).forEach(moduleKey => {
+                     // Używamy klucza obiektu (np. 'pacjenci', 'zadania') do znalezienia ID
+                     const modId = moduleKey.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-');
+                     roles[role][moduleKey].forEach(permission => {
+                         const checkbox = document.getElementById(`${permission}-${modId}`);
+                         if(checkbox) checkbox.checked = true;
+                     });
+                });
+                
+                // Superuser - wszystko zaznaczone, ale zablokowane
+                if(document.body.textContent.includes('superuser')) {
+                     document.querySelectorAll('.permission-checkbox').forEach(cb => {
+                        cb.checked = true;
+                        if(document.getElementById(`delete-uzytkownicy`)) { // nie może usunąć sam siebie
+                             document.getElementById(`delete-uzytkownicy`).checked = false;
+                        }
+                     });
+                }
+            }
+            
+            document.querySelectorAll('.role-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const role = e.target.dataset.role;
+                    setPermissions(role);
+                    
+                    document.querySelectorAll('.role-btn').forEach(btn => btn.classList.remove('ring-2', 'ring-blue-500'));
+                    e.target.classList.add('ring-2', 'ring-blue-500');
+                });
+            });
+
+            // --- Danger Zone Modal Logic ---
+            const deactivateBtn = document.getElementById('deactivateBtn');
+            const deleteBtn = document.getElementById('deleteBtn');
+
+            const deactivateModal = document.getElementById('deactivateUserModal');
+            const cancelDeactivateBtn = document.getElementById('cancelDeactivateBtn');
+            const confirmDeactivateBtn = document.getElementById('confirmDeactivateBtn');
+
+            const deleteModal = document.getElementById('deleteUserModal');
+            const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+            // Deactivate
+            deactivateBtn.addEventListener('click', () => openModal(deactivateModal));
+            cancelDeactivateBtn.addEventListener('click', () => closeModal(deactivateModal));
+            deactivateModal.addEventListener('click', e => { if (e.target === deactivateModal) closeModal(deactivateModal); });
+            confirmDeactivateBtn.addEventListener('click', () => {
+                console.log("Deactivating user...");
+                window.location.href = 'uzytkownicy.html'; // Redirect
+            });
+
+            // Delete
+            deleteBtn.addEventListener('click', () => openModal(deleteModal));
+            cancelDeleteBtn.addEventListener('click', () => closeModal(deleteModal));
+            deleteModal.addEventListener('click', e => { if (e.target === deleteModal) closeModal(deleteModal); });
+            confirmDeleteBtn.addEventListener('click', () => {
+                console.log("Deleting user...");
+                window.location.href = 'uzytkownicy.html'; // Redirect
+            });
+
+            // Inicjalizacja
+            generatePermissionsRows();
+            // Ustaw rolę domyślną dla widoku, np. pielęgniarz
+            setPermissions('pielegniarz');
+            const defaultRoleBtn = document.querySelector('[data-role="custom"]');
+            if (defaultRoleBtn) {
+                 defaultRoleBtn.classList.add('ring-2', 'ring-blue-500');
+            }
+
+        });
+    </script>
+</body>
+</html>
+
